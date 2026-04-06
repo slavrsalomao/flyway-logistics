@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FLY WAY Logistics — Entregas Portugal & Moçambique</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--or:#F07800;--or-d:#D96800;--or-l:#FFF3E0;--bk:#0A0A0A;--wh:#fff;--gy:#F4F4F4;--bd:#E8E8E8;--mt:#888;--tx:#111;--gr:#16A34A;--rd:#DC2626}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--tx);background:var(--wh);overflow-x:hidden}
+.hidden{display:none!important}
+
+/* ── LOADING OVERLAY ── */
+#loading-overlay{position:fixed;inset:0;background:rgba(10,10,10,.85);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;backdrop-filter:blur(4px)}
+.spin{width:44px;height:44px;border:3px solid rgba(240,120,0,.2);border-top-color:var(--or);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#loading-overlay p{color:rgba(255,255,255,.6);font-size:14px;font-weight:500}
+
+/* ── SETUP BANNER ── */
+#setup-banner{background:linear-gradient(135deg,#1a1a1a,#2a1500);border:1px solid rgba(240,120,0,.3);border-radius:12px;padding:24px;margin-bottom:24px;display:none}
+#setup-banner h3{font-size:16px;font-weight:700;color:white;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+#setup-banner p{font-size:13px;color:rgba(255,255,255,.5);line-height:1.7}
+
+/* ── NAV ── */
+#nav{position:fixed;top:0;width:100%;z-index:300;transition:all .4s;padding:0 6%}
+#nav.scrolled{background:rgba(10,10,10,.96);backdrop-filter:blur(20px);box-shadow:0 1px 0 rgba(240,120,0,.3)}
+#nav.light{background:rgba(255,255,255,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--bd)}
+#nav.light .nlt{color:var(--bk)}#nav.light .nlt span{color:var(--or)}
+#nav.light .nlk{color:#555}#nav.light .nlk:hover{color:var(--or)}
+#nav.light .hamburger span{background:var(--bk)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:70px}
+.nlogo{display:flex;align-items:center;gap:10px;cursor:pointer}
+.nlogo-img{width:38px;height:38px;transition:transform .3s}
+.nlogo:hover .nlogo-img{transform:rotate(-5deg) scale(1.05)}
+.nlt{font-size:18px;font-weight:800;color:white;letter-spacing:-.5px}
+.nlt span{color:var(--or)}
+.nlsub{font-size:8px;font-weight:600;letter-spacing:3px;color:rgba(255,255,255,.35);text-transform:uppercase;display:block;margin-top:1px}
+#nav.light .nlsub{color:var(--mt)}
+.nlks{display:flex;gap:32px}
+.nlk{font-size:13px;font-weight:500;color:rgba(255,255,255,.65);text-decoration:none;transition:color .2s}
+.nlk:hover{color:var(--or)}
+.ncta{background:var(--or);color:white;padding:10px 22px;border-radius:6px;font-weight:700;font-size:13px;border:none;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.ncta:hover{background:var(--or-d);transform:translateY(-1px);box-shadow:0 4px 16px rgba(240,120,0,.4)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.hamburger span{width:22px;height:2px;background:white;border-radius:2px;display:block}
+.mob-menu{display:none;flex-direction:column;background:var(--bk);border-bottom:2px solid var(--or)}
+.mob-menu a,.mob-menu button{padding:15px 6%;font-size:15px;font-weight:600;color:white;text-decoration:none;border:none;background:none;text-align:left;cursor:pointer;border-top:1px solid rgba(255,255,255,.06);font-family:'Inter',sans-serif}
+.mob-menu.open{display:flex}
+
+/* ── HERO ── */
+#hero{height:100vh;min-height:680px;background:var(--bk);display:flex;align-items:center;position:relative;overflow:hidden;padding:0 6%}
+#hero-canvas{position:absolute;inset:0;opacity:.6}
+.hcontent{position:relative;z-index:2;max-width:640px}
+.heyebrow{display:inline-flex;align-items:center;gap:10px;margin-bottom:28px}
+.hpulse{width:8px;height:8px;background:var(--or);border-radius:50%;animation:hp 2s infinite;flex-shrink:0}
+@keyframes hp{0%,100%{box-shadow:0 0 0 0 rgba(240,120,0,.6)}70%{box-shadow:0 0 0 8px rgba(240,120,0,0)}}
+.heyebrow span{font-size:11px;font-weight:600;color:rgba(255,255,255,.45);letter-spacing:2px;text-transform:uppercase}
+.htitle{font-size:clamp(52px,7vw,88px);font-weight:800;color:white;line-height:1;letter-spacing:-3px;margin-bottom:22px}
+.htitle .l2{color:var(--or)}.htitle .l3{font-weight:300;color:rgba(255,255,255,.4);font-size:.7em;letter-spacing:-1px}
+.hsub{font-size:16px;color:rgba(255,255,255,.4);line-height:1.8;max-width:440px;margin-bottom:40px}
+.track-box{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:24px;backdrop-filter:blur(10px)}
+.track-box label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.35);display:block;margin-bottom:10px}
+.trow{display:flex;gap:8px}
+.tin{flex:1;padding:13px 16px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:8px;font-size:15px;font-family:'Inter',sans-serif;color:white;outline:none;transition:all .2s}
+.tin::placeholder{color:rgba(255,255,255,.2)}
+.tin:focus{border-color:var(--or)}
+.tbtn{background:var(--or);color:white;border:none;padding:13px 22px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;white-space:nowrap}
+.tbtn:hover{background:var(--or-d)}
+.terr{color:#FCA5A5;font-size:13px;margin-top:10px;font-weight:500;display:none}
+.hstats{display:flex;gap:28px;margin-top:28px;padding-top:24px;border-top:1px solid rgba(255,255,255,.07)}
+.hs-n{font-size:30px;font-weight:800;color:white;letter-spacing:-1px;line-height:1}
+.hs-l{font-size:11px;color:rgba(255,255,255,.3);font-weight:500;margin-top:4px;letter-spacing:.5px}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .7s,transform .7s}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}.d5{transition-delay:.5s}
+
+/* ── SECTIONS ── */
+section{padding:90px 6%}
+.tag{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--or);margin-bottom:16px}
+.tag::before{content:'';width:20px;height:2px;background:var(--or);border-radius:1px}
+.stitle{font-size:clamp(32px,4vw,52px);font-weight:800;color:var(--bk);letter-spacing:-2px;line-height:1.05;margin-bottom:14px}
+.ssub{font-size:15px;color:var(--mt);line-height:1.8;max-width:480px}
+
+/* ── SERVICES ── */
+#servicos{background:var(--gy)}
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2px;margin-top:52px}
+.svc-card{background:white;padding:32px;transition:all .3s;position:relative;overflow:hidden;cursor:default}
+.svc-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--or);transform:scaleX(0);transition:transform .3s;transform-origin:left}
+.svc-card:hover{transform:translateY(-4px);z-index:2;box-shadow:0 20px 60px rgba(0,0,0,.08)}
+.svc-card:hover::after{transform:scaleX(1)}
+.svc-n{font-size:11px;font-weight:700;color:var(--or);letter-spacing:2px;margin-bottom:20px;display:block}
+.svc-i{font-size:36px;margin-bottom:16px;display:block;transition:transform .3s}
+.svc-card:hover .svc-i{transform:scale(1.2) rotate(-5deg)}
+.svc-card h3{font-size:17px;font-weight:700;color:var(--bk);margin-bottom:10px;letter-spacing:-.3px}
+.svc-card p{font-size:14px;color:var(--mt);line-height:1.7}
+
+/* ── REEL SECTION ── */
+#reel{background:var(--bk);padding:0;overflow:hidden;position:relative}
+.reel-top{padding:70px 6% 40px;position:relative;z-index:2}
+.reel-top .tag{color:var(--or)}
+.reel-top .stitle{color:white}
+.reel-scene{position:relative;height:380px;overflow:hidden}
+#reel-canvas{position:absolute;inset:0;width:100%;height:100%}
+.reel-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,10,10,.8) 0%,transparent 40%,transparent 60%,rgba(10,10,10,.8) 100%);pointer-events:none;z-index:2}
+.reel-stats{position:absolute;bottom:32px;left:6%;z-index:3;display:flex;gap:32px}
+.rs-n{font-size:36px;font-weight:800;color:white;letter-spacing:-1.5px;line-height:1}.rs-n span{color:var(--or)}
+.rs-l{font-size:11px;color:rgba(255,255,255,.35);font-weight:500;letter-spacing:1px;text-transform:uppercase;margin-top:4px}
+.reel-badge{position:absolute;top:32px;right:6%;z-index:3;background:var(--or);color:white;padding:10px 18px;border-radius:6px;font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;display:flex;align-items:center;gap:8px;animation:rbp 3s infinite}
+@keyframes rbp{0%,100%{box-shadow:0 0 0 0 rgba(240,120,0,.4)}50%{box-shadow:0 0 0 12px rgba(240,120,0,0)}}
+.rbd{width:7px;height:7px;background:white;border-radius:50%;animation:hp 1.5s infinite}
+
+/* ── HOW IT WORKS ── */
+#como{background:white}
+.steps-wrap{margin-top:56px}
+.step-row{display:flex;gap:32px;align-items:flex-start;padding:28px 0;border-bottom:1px solid var(--bd);transition:all .3s;position:relative;cursor:default}
+.step-row:last-child{border-bottom:none}
+.step-row:hover{padding-left:12px}
+.step-row::before{content:'';position:absolute;left:0;top:0;bottom:0;width:0;background:var(--or-l);transition:width .3s;z-index:0}
+.step-row:hover::before{width:100%}
+.step-row>*{position:relative;z-index:1}
+.sn{width:64px;height:64px;border-radius:50%;background:var(--gy);border:2px solid var(--bd);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;transition:all .3s}
+.step-row:hover .sn{background:var(--or);border-color:var(--or);transform:scale(1.1)}
+.sbody{flex:1}
+.sbody h3{font-size:17px;font-weight:700;color:var(--bk);margin-bottom:6px;letter-spacing:-.3px;transition:color .3s}
+.step-row:hover .sbody h3{color:var(--or-d)}
+.sbody p{font-size:14px;color:var(--mt);line-height:1.7}
+.spill{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--mt);background:var(--gy);padding:5px 12px;border-radius:100px;flex-shrink:0;transition:all .3s}
+.step-row:hover .spill{background:var(--or);color:white}
+
+/* ── CONTACT ── */
+#contacto{background:var(--bk);padding-bottom:0}
+#contacto .tag{color:var(--or)}
+#contacto .stitle{color:white}
+#contacto .ssub{color:rgba(255,255,255,.35)}
+.ct-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-top:52px}
+.ct-item{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);padding:28px;transition:all .3s;cursor:default}
+.ct-item:hover{background:rgba(240,120,0,.06);border-color:rgba(240,120,0,.3);transform:translateY(-3px)}
+.ctico{font-size:28px;margin-bottom:14px;display:block;transition:transform .3s}
+.ct-item:hover .ctico{transform:scale(1.2)}
+.ct-item strong{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.3);display:block;margin-bottom:6px}
+.ct-item span{font-size:17px;color:white;font-weight:600;letter-spacing:-.3px}
+.ct-item .ctnote{font-size:12px;color:rgba(255,255,255,.25);margin-top:4px}
+.wa-section{padding:40px 6%;background:var(--bk);border-top:1px solid rgba(255,255,255,.05)}
+.wa-card{background:linear-gradient(135deg,#075E54,#128C7E);border-radius:12px;padding:32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;transition:transform .3s;cursor:pointer;position:relative;overflow:hidden}
+.wa-card::before{content:'';position:absolute;right:-40px;top:-40px;width:200px;height:200px;background:rgba(255,255,255,.05);border-radius:50%}
+.wa-card:hover{transform:translateY(-4px);box-shadow:0 20px 60px rgba(18,140,126,.3)}
+.wa-card-l h3{font-size:22px;font-weight:800;color:white;letter-spacing:-.5px;margin-bottom:6px}
+.wa-card-l p{font-size:14px;color:rgba(255,255,255,.55)}
+.wa-card-l .wanum{font-size:28px;font-weight:800;color:white;letter-spacing:-1px;margin-top:10px}
+.wa-btn-card{background:white;color:#075E54;padding:14px 28px;border-radius:8px;font-weight:800;font-size:15px;border:none;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:10px;position:relative;z-index:1;transition:all .2s;white-space:nowrap}
+.wa-btn-card:hover{transform:scale(1.04)}
+footer{background:#050505;padding:32px 6%;border-top:1px solid rgba(255,255,255,.05)}
+.ftinner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.ftcopy{font-size:13px;color:rgba(255,255,255,.2)}
+.ftadmin{font-size:12px;color:rgba(255,255,255,.1);cursor:pointer;transition:color .2s;font-weight:500}
+.ftadmin:hover{color:var(--or)}
+
+/* ── TRACKING ── */
+#view-tracking{padding:100px 6% 60px;min-height:100vh;background:var(--gy)}
+.back-btn{display:inline-flex;align-items:center;gap:8px;color:var(--or);font-weight:700;font-size:13px;cursor:pointer;border:none;background:none;font-family:'Inter',sans-serif;margin-bottom:32px;padding:0;transition:opacity .2s}
+.back-btn:hover{opacity:.7}
+.tv-card{background:white;border-radius:16px;border:1px solid var(--bd);overflow:hidden;margin-bottom:20px;box-shadow:0 4px 24px rgba(0,0,0,.06)}
+.tv-top{padding:28px;border-bottom:1px solid var(--bd);display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.tv-id-lbl{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mt);margin-bottom:4px}
+.tv-id{font-size:28px;font-weight:800;color:var(--bk);letter-spacing:-1px}
+.tv-desc{font-size:13px;color:var(--mt);margin-top:5px}
+.spill{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:8px;font-weight:700;font-size:13px;letter-spacing:.3px}
+.sp-del{background:#DCFCE7;color:#15803D}.sp-tr{background:var(--or-l);color:var(--or-d)}.sp-pe{background:#FEF3C7;color:#92400E}.sp-fa{background:#FEE2E2;color:#991B1B}
+.tv-progress{padding:28px 28px 8px}
+.tv-prog-lbl{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mt);margin-bottom:20px}
+.prog-steps{display:flex;overflow-x:auto;padding-bottom:16px}
+.prog-steps::-webkit-scrollbar{height:3px}
+.prog-steps::-webkit-scrollbar-thumb{background:var(--bd);border-radius:2px}
+.ps-wrap{flex:1;min-width:100px;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative}
+.ps-conn{position:absolute;top:40px;left:50%;right:-50%;height:4px;background:var(--bd);z-index:0}
+.ps-conn.done{background:var(--or)}
+.ps-node{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;margin-bottom:12px;transition:all .4s;border:3px solid var(--bd);background:white}
+.ps-node.nd-done{background:var(--or-l);border-color:var(--or)}
+.ps-node.nd-active{background:var(--or);border-color:var(--or);box-shadow:0 0 0 10px rgba(240,120,0,.15);animation:ndp 2.5s infinite}
+@keyframes ndp{0%,100%{box-shadow:0 0 0 10px rgba(240,120,0,.15)}50%{box-shadow:0 0 0 20px rgba(240,120,0,.04)}}
+.ps-node.nd-pending{opacity:.4;background:var(--gy)}
+.ps-emoji{font-size:30px}
+.ps-node.nd-active .ps-emoji{filter:grayscale(1) brightness(10)}
+.ps-tick{position:absolute;bottom:-3px;right:-3px;width:22px;height:22px;background:var(--or);border-radius:50%;border:2px solid white;font-size:11px;color:white;display:flex;align-items:center;justify-content:center;font-weight:700}
+.ps-name{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--tx);line-height:1.3;margin-bottom:3px}
+.ps-wrap.active-wrap .ps-name{color:var(--or)}
+.ps-date{font-size:10px;color:var(--mt)}
+.tv-anim{margin:0 28px 28px;background:linear-gradient(135deg,#FFF8F0,var(--or-l));border-radius:12px;padding:24px 32px;display:flex;align-items:center;justify-content:center;min-height:130px;overflow:hidden;position:relative}
+.road{position:absolute;bottom:18px;left:32px;right:32px}
+.road-bg{height:4px;background:rgba(240,120,0,.15);border-radius:2px}
+.road-dash{height:4px;margin-top:-4px;overflow:hidden;border-radius:2px}
+.road-dash::after{content:'';display:block;height:100%;background:repeating-linear-gradient(90deg,transparent 0,transparent 18px,rgba(240,120,0,.35) 18px,rgba(240,120,0,.35) 36px);animation:rd 1.2s linear infinite}
+@keyframes rd{to{transform:translateX(36px)}}
+.rl-l{position:absolute;bottom:4px;left:32px;font-size:10px;font-weight:700;color:var(--or);letter-spacing:1px;text-transform:uppercase}
+.rl-r{position:absolute;bottom:4px;right:32px;font-size:10px;font-weight:700;color:var(--or);letter-spacing:1px;text-transform:uppercase}
+.truck-wrap{position:absolute;transition:left 1s cubic-bezier(.4,0,.2,1);bottom:30px;z-index:2;animation:trk .8s ease-in-out infinite alternate}
+@keyframes trk{from{transform:translateY(0)}to{transform:translateY(-3px)}}
+.a-delivered{display:flex;align-items:center;gap:24px;animation:da .6s ease}
+@keyframes da{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+.dei{font-size:64px;filter:drop-shadow(0 4px 16px rgba(240,120,0,.3))}
+.det strong{font-size:26px;font-weight:800;color:var(--or-d);letter-spacing:-1px;display:block}
+.det span{font-size:13px;color:var(--mt)}
+.tv-meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:14px;padding:20px 28px;border-top:1px solid var(--bd)}
+.tv-meta-box{background:var(--gy);border-radius:10px;padding:14px 16px}
+.tv-meta-box strong{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--mt);display:block;margin-bottom:6px}
+.tv-meta-box span{font-size:14px;font-weight:700;color:var(--bk)}
+.tl-card{background:white;border-radius:16px;border:1px solid var(--bd);overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.06)}
+.tl-head{padding:20px 24px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:10px}
+.tl-head h3{font-size:14px;font-weight:700;color:var(--bk);text-transform:uppercase;letter-spacing:.5px}
+.tl-body{padding:24px}
+.tl-row{display:flex;gap:14px;padding-bottom:24px}
+.tl-row:last-child{padding-bottom:0}
+.tl-col{display:flex;flex-direction:column;align-items:center;width:44px;flex-shrink:0}
+.tl-dot{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.td-a{background:var(--or);box-shadow:0 0 0 6px rgba(240,120,0,.15)}.td-d{background:var(--or-l);border:2px solid var(--or)}
+.tl-line{flex:1;width:2px;background:var(--bd);margin-top:4px}.tl-line.done{background:var(--or)}
+.tl-info{flex:1;padding-top:9px}
+.tl-info strong{font-size:15px;font-weight:700;color:var(--bk);display:block;letter-spacing:-.3px}
+.tl-loc{font-size:13px;color:var(--mt);margin-top:3px}
+.tl-dt{font-size:12px;color:var(--mt);margin-top:3px;font-weight:500}
+.tl-note{background:var(--or-l);border-left:3px solid var(--or);padding:8px 12px;border-radius:0 6px 6px 0;font-size:13px;color:var(--mt);margin-top:10px}
+
+/* ── ADMIN ── */
+#view-admin-login{min-height:100vh;background:var(--bk);display:flex;align-items:center;justify-content:center;padding:20px}
+.lg-card{background:white;border-radius:16px;padding:44px;width:100%;max-width:400px;border-top:4px solid var(--or)}
+.lg-card h2{font-size:26px;font-weight:800;color:var(--bk);letter-spacing:-1px;text-align:center;margin-bottom:4px}
+.lg-card p{font-size:14px;color:var(--mt);text-align:center;margin-bottom:28px}
+.fl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--tx);display:block;margin-bottom:8px}
+.fi{width:100%;padding:13px 16px;border:2px solid var(--bd);border-radius:8px;font-size:15px;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s;color:var(--tx);background:white}
+.fi:focus{border-color:var(--or)}
+.fi:disabled{background:var(--gy);color:var(--mt)}
+.fsel{width:100%;padding:13px 16px;border:2px solid var(--bd);border-radius:8px;font-size:15px;font-family:'Inter',sans-serif;outline:none;appearance:none;background:white url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M6 8L0 0h12z' fill='%23888'/></svg>") no-repeat right 14px center;cursor:pointer;color:var(--tx)}
+.fsel:focus{border-color:var(--or)}
+.fta{width:100%;padding:13px 16px;border:2px solid var(--bd);border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;outline:none;resize:vertical;min-height:80px;color:var(--tx)}
+.fta:focus{border-color:var(--or)}
+.fg{margin-bottom:18px}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fbtn{width:100%;padding:14px;background:var(--or);color:white;border:none;border-radius:8px;font-weight:700;font-size:15px;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.fbtn:hover{background:var(--or-d);transform:translateY(-1px)}
+.err-box{background:#FEE2E2;color:#991B1B;padding:10px 14px;border-radius:6px;font-size:13px;margin-bottom:14px;display:none;font-weight:600}
+.suc-box{background:#DCFCE7;color:#15803D;padding:10px 14px;border-radius:6px;font-size:13px;margin-bottom:14px;display:none;font-weight:600}
+.back-lnk{text-align:center;margin-top:18px;font-size:13px;color:var(--mt);cursor:pointer;transition:color .2s}
+.back-lnk:hover{color:var(--or)}
+#view-admin{min-height:100vh;background:var(--gy)}
+.admbar{background:var(--bk);padding:0 6%;display:flex;align-items:center;justify-content:space-between;height:58px;border-bottom:2px solid var(--or)}
+.admacts{display:flex;gap:8px}
+.ab{padding:7px 16px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;border:none;transition:all .2s}
+.ab-or{background:var(--or);color:white}.ab-or:hover{background:var(--or-d)}
+.ab-gh{background:rgba(255,255,255,.1);color:rgba(255,255,255,.7)}.ab-gh:hover{color:white}
+.ab-rd{background:#FEE2E2;color:#991B1B}.ab-rd:hover{background:#FECACA}
+.ab-bl{background:#DBEAFE;color:#1D4ED8}.ab-bl:hover{background:#BFDBFE}
+.admbody{padding:24px 6%}
+.admtabs{display:flex;gap:4px;background:white;border:1px solid var(--bd);border-radius:8px;padding:4px;width:fit-content;margin-bottom:22px}
+.atab{padding:8px 18px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;border:none;background:transparent;color:var(--mt);font-family:'Inter',sans-serif;transition:all .2s}
+.atab.active{background:var(--or);color:white}
+.tblcard{background:white;border:1px solid var(--bd);border-radius:12px;overflow:hidden}
+.tblhd{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--bd);flex-wrap:wrap;gap:12px}
+.tblhd h3{font-size:15px;font-weight:700;color:var(--bk);letter-spacing:-.3px}
+.tblhd-right{display:flex;align-items:center;gap:10px}
+.srch{padding:8px 14px;border:1px solid var(--bd);border-radius:6px;font-size:13px;font-family:'Inter',sans-serif;outline:none;width:180px;transition:border-color .2s}
+.srch:focus{border-color:var(--or)}
+.refresh-btn{padding:8px 12px;border:1px solid var(--bd);border-radius:6px;font-size:13px;font-family:'Inter',sans-serif;background:var(--gy);cursor:pointer;transition:all .2s;color:var(--tx)}
+.refresh-btn:hover{border-color:var(--or);color:var(--or)}
+table{width:100%;border-collapse:collapse}
+th{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--mt);padding:11px 16px;text-align:left;background:var(--gy);border-bottom:1px solid var(--bd)}
+td{padding:13px 16px;font-size:14px;color:var(--tx);border-bottom:1px solid var(--bd)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#FAFAFA}
+.sbadge{padding:4px 10px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:.3px}
+.sb-de{background:#DCFCE7;color:#15803D}.sb-tr{background:var(--or-l);color:var(--or-d)}.sb-pe{background:#FEF3C7;color:#92400E}.sb-cu{background:#EDE9FE;color:#6D28D9}.sb-di{background:#E0F2FE;color:#0369A1}.sb-fa{background:#FEE2E2;color:#991B1B}.sb-re{background:var(--gy);color:var(--mt)}
+.act-row{display:flex;gap:6px;flex-wrap:wrap}
+.empty{padding:60px 20px;text-align:center;color:var(--mt)}
+.empty .eico{font-size:48px;display:block;margin-bottom:14px}
+.empty p{font-size:16px;font-weight:700}
+/* API status badge */
+.api-status{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;padding:5px 12px;border-radius:100px}
+.api-ok{background:#DCFCE7;color:#15803D}
+.api-err{background:#FEE2E2;color:#991B1B}
+.api-none{background:var(--gy);color:var(--mt)}
+/* MODAL */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:500;display:flex;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(4px)}
+.modal{background:white;border-radius:16px;padding:32px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;border-top:4px solid var(--or);box-shadow:0 24px 80px rgba(0,0,0,.3)}
+.mdlhd{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.mdlhd h3{font-size:22px;font-weight:800;color:var(--bk);letter-spacing:-1px}
+.mdlx{background:var(--gy);border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--mt);transition:background .2s}
+.mdlx:hover{background:var(--bd)}
+.mdlft{display:flex;gap:10px;justify-content:flex-end;margin-top:22px;padding-top:18px;border-top:1px solid var(--bd)}
+.mdl-cancel{padding:11px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:2px solid var(--bd);background:white;color:var(--mt);font-family:'Inter',sans-serif}
+.mdl-ok{padding:11px 28px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;border:none;background:var(--or);color:white;font-family:'Inter',sans-serif;transition:all .2s}
+.mdl-ok:hover{background:var(--or-d)}
+.hl-list{border:1px solid var(--bd);border-radius:8px;overflow:hidden;max-height:140px;overflow-y:auto;margin-top:8px}
+.hl-row{padding:10px 14px;font-size:13px;border-bottom:1px solid var(--bd);display:flex;gap:8px;align-items:center}
+.hl-row:last-child{border-bottom:none}
+.hls{font-weight:600;color:var(--bk);flex:1}.hld{color:var(--mt);font-size:11px;white-space:nowrap}
+.st-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px}
+.stcard{background:white;border-radius:12px;padding:24px;text-align:center;border:1px solid var(--bd)}
+.stbig{font-size:48px;font-weight:800;line-height:1;letter-spacing:-2px}
+.stlbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--mt);margin-top:6px}
+.c-or{color:var(--or)}.c-gr{color:var(--gr)}.c-bl{color:#1D4ED8}.c-am{color:#D97706}
+
+/* Setup guide */
+.setup-guide{background:var(--bk);border-radius:14px;padding:28px;border:1px solid rgba(240,120,0,.2)}
+.setup-guide h3{font-size:18px;font-weight:800;color:white;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.step-guide{display:flex;gap:14px;margin-bottom:16px;align-items:flex-start}
+.sg-num{width:28px;height:28px;background:var(--or);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:white;flex-shrink:0;margin-top:2px}
+.sg-text{flex:1}
+.sg-text strong{font-size:14px;font-weight:700;color:white;display:block;margin-bottom:3px}
+.sg-text span{font-size:13px;color:rgba(255,255,255,.45);line-height:1.6}
+.sg-text code{background:rgba(240,120,0,.15);color:var(--or);padding:2px 8px;border-radius:4px;font-family:monospace;font-size:12px}
+.sg-link{display:inline-flex;align-items:center;gap:6px;background:rgba(240,120,0,.15);color:var(--or);padding:8px 14px;border-radius:6px;font-size:12px;font-weight:700;text-decoration:none;margin-top:8px;transition:background .2s}
+.sg-link:hover{background:rgba(240,120,0,.25)}
+
+@media(max-width:900px){.ct-grid{grid-template-columns:1fr}.f2{grid-template-columns:1fr}}
+@media(max-width:768px){.nlks,.ncta{display:none}.hamburger{display:flex}.trow{flex-direction:column}.tbtn{width:100%}.hstats{gap:16px}.ftinner{flex-direction:column;text-align:center}.tblhd{flex-direction:column;align-items:flex-start}}
+</style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div id="loading-overlay" class="hidden">
+  <div class="spin"></div>
+  <p id="loading-msg">A carregar...</p>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <div class="nlogo" onclick="goHome()">
+      <svg class="nlogo-img" viewBox="0 0 200 200" fill="none">
+        <circle cx="100" cy="100" r="100" fill="#F07800"/>
+        <path d="M140 55C130 50 110 52 95 65 85 73 78 88 78 88 78 88 68 84 55 85 46 86 38 91 34 98 42 97 52 100 58 106 50 112 44 124 43 136 52 130 65 124 76 123 76 131 79 142 85 150 90 140 92 128 91 118 102 113 115 106 124 99 120 110 120 122 120 132 130 120 137 104 138 91 139 83 138 70 140 55Z" fill="white"/>
+        <path d="M124 99C132 92 142 88 152 89 146 95 138 104 133 113 128 107 125 103 124 99Z" fill="rgba(255,255,255,.45)"/>
+      </svg>
+      <div>
+        <div class="nlt">FLY WAY <span>✦</span></div>
+        <span class="nlsub">Logistics</span>
+      </div>
+    </div>
+    <div class="nlks">
+      <a href="#hero" class="nlk">Início</a>
+      <a href="#servicos" class="nlk">Serviços</a>
+      <a href="#reel" class="nlk">Sobre nós</a>
+      <a href="#como" class="nlk">Como funciona</a>
+      <a href="#contacto" class="nlk">Contacto</a>
+    </div>
+    <button class="ncta" onclick="scrollToTrack()">Rastrear encomenda</button>
+    <button class="hamburger" onclick="toggleMob()"><span></span><span></span><span></span></button>
+  </div>
+  <div class="mob-menu" id="mob-menu">
+    <a href="#hero" onclick="closeMob()">Início</a>
+    <a href="#servicos" onclick="closeMob()">Serviços</a>
+    <a href="#reel" onclick="closeMob()">Sobre nós</a>
+    <a href="#como" onclick="closeMob()">Como funciona</a>
+    <a href="#contacto" onclick="closeMob()">Contacto</a>
+    <button onclick="scrollToTrack();closeMob()">Rastrear encomenda</button>
+  </div>
+</nav>
+
+<!-- ═══ MAIN ═══ -->
+<div id="view-main">
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hcontent">
+    <div class="heyebrow reveal"><span class="hpulse"></span><span>Serviço activo · Portugal &amp; Moçambique</span></div>
+    <h1 class="htitle reveal d1"><div>Entregamos</div><div class="l2">com confiança</div><div class="l3">Porto → Maputo</div></h1>
+    <p class="hsub reveal d2">Envio de encomendas de Portugal para todo Moçambique. Roupas, electrodomésticos e muito mais — com rastreio em tempo real.</p>
+    <div class="track-box reveal d3">
+      <label>Rastrear a minha encomenda</label>
+      <div class="trow">
+        <input class="tin" type="text" id="t-inp" placeholder="Número de rastreio · Ex: FW-001234" onkeydown="if(event.key==='Enter')doTrack()">
+        <button class="tbtn" onclick="doTrack()">Rastrear →</button>
+      </div>
+      <div class="terr" id="t-err"></div>
+    </div>
+    <div class="hstats reveal d4">
+      <div><div class="hs-n" data-count="500">0</div><div class="hs-l">Encomendas entregues</div></div>
+      <div><div class="hs-n" data-count="10">0</div><div class="hs-l">Cidades cobertas</div></div>
+      <div><div class="hs-n" data-count="99">0</div><div class="hs-l">% Satisfação</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="servicos">
+  <div class="tag reveal">O que fazemos</div>
+  <h2 class="stitle reveal d1">Os nossos serviços</h2>
+  <p class="ssub reveal d2">Soluções completas de transporte e logística entre Portugal e Moçambique.</p>
+  <div class="svc-grid">
+    <div class="svc-card reveal d1"><span class="svc-n">01</span><span class="svc-i">✈️</span><h3>Envios de Portugal</h3><p>Recebemos no Porto e entregamos em todo Moçambique com segurança total.</p></div>
+    <div class="svc-card reveal d2"><span class="svc-n">02</span><span class="svc-i">👗</span><h3>Roupas &amp; Calçado</h3><p>Especialistas em vestuário, calçado, acessórios e perfumes.</p></div>
+    <div class="svc-card reveal d3"><span class="svc-n">03</span><span class="svc-i">📱</span><h3>Electrodomésticos</h3><p>Equipamentos embalados com máximo cuidado e seguro incluído.</p></div>
+    <div class="svc-card reveal d4"><span class="svc-n">04</span><span class="svc-i">🚛</span><h3>Distribuição Nacional</h3><p>Cobrimos todas as províncias de Moçambique.</p></div>
+    <div class="svc-card reveal d1"><span class="svc-n">05</span><span class="svc-i">🛡️</span><h3>Entrega Garantida</h3><p>Acompanhamos cada encomenda do início ao fim com total responsabilidade.</p></div>
+    <div class="svc-card reveal d2"><span class="svc-n">06</span><span class="svc-i">📍</span><h3>Rastreio em Tempo Real</h3><p>Acompanhe cada etapa em qualquer momento, 24h por dia.</p></div>
+  </div>
+</section>
+
+<section id="reel" style="padding:0">
+  <div class="reel-top">
+    <div class="tag reveal">A nossa operação</div>
+    <h2 class="stitle reveal d1">De Portugal<br>para o mundo</h2>
+  </div>
+  <div class="reel-scene">
+    <canvas id="reel-canvas"></canvas>
+    <div class="reel-overlay"></div>
+    <div class="reel-badge"><span class="rbd"></span>OPERAÇÃO EM CURSO</div>
+    <div class="reel-stats">
+      <div><div class="rs-n"><span data-count2="500">0</span>+</div><div class="rs-l">Encomendas</div></div>
+      <div><div class="rs-n"><span data-count2="3">0</span></div><div class="rs-l">Anos activos</div></div>
+      <div><div class="rs-n"><span data-count2="10">0</span>+</div><div class="rs-l">Cidades</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="como" style="background:white">
+  <div class="tag reveal">Processo</div>
+  <h2 class="stitle reveal d1">Como funciona</h2>
+  <p class="ssub reveal d2">Do registo à entrega — cada passo acompanhado pela nossa equipa.</p>
+  <div class="steps-wrap">
+    <div class="step-row reveal"><div class="sn">📦</div><div class="sbody"><h3>Registo da encomenda</h3><p>A encomenda é registada e recebe um código único de rastreio para partilhar com o destinatário.</p></div><span class="spill">Passo 1</span></div>
+    <div class="step-row reveal d1"><div class="sn">✅</div><div class="sbody"><h3>Recolha em Portugal</h3><p>A nossa equipa no Porto recolhe e confirma o estado do produto antes de embarcar.</p></div><span class="spill">Passo 2</span></div>
+    <div class="step-row reveal d2"><div class="sn">🚛</div><div class="sbody"><h3>Em trânsito</h3><p>A encomenda viaja de Portugal para Moçambique com notificações WhatsApp em cada etapa.</p></div><span class="spill">Passo 3</span></div>
+    <div class="step-row reveal d3"><div class="sn">🛃</div><div class="sbody"><h3>Despacho alfandegário</h3><p>Processamos o despacho aduaneiro para agilizar a entrada em Moçambique.</p></div><span class="spill">Passo 4</span></div>
+    <div class="step-row reveal d4"><div class="sn">🏍️</div><div class="sbody"><h3>Distribuição local</h3><p>Entregue à rede local para o endereço final em qualquer província.</p></div><span class="spill">Passo 5</span></div>
+    <div class="step-row reveal d5"><div class="sn">🎉</div><div class="sbody"><h3>Entregue!</h3><p>O destinatário recebe e o remetente em Portugal recebe confirmação automática via WhatsApp.</p></div><span class="spill">Passo 6</span></div>
+  </div>
+</section>
+
+<section id="contacto" style="padding-bottom:0">
+  <div class="tag reveal">Contacto</div>
+  <h2 class="stitle reveal d1">Fale connosco</h2>
+  <p class="ssub reveal d2">A nossa equipa está disponível para ajudar.</p>
+  <div class="ct-grid reveal d2">
+    <div class="ct-item"><span class="ctico">📞</span><strong>Portugal — Principal</strong><span id="d-pt">+351 929 201 880</span><div class="ctnote">Porto · Segunda a Sábado · 8h–20h</div></div>
+    <div class="ct-item"><span class="ctico">📱</span><strong>Moçambique</strong><span id="d-mz">+258 87 342 9076</span><div class="ctnote">Maputo · Segunda a Sábado · 7h–19h</div></div>
+    <div class="ct-item"><span class="ctico">✈️</span><strong>Rota principal</strong><span>Porto → Maputo</span><div class="ctnote">Envios regulares · Consulte próxima data</div></div>
+    <div class="ct-item"><span class="ctico">📦</span><strong>O que aceitamos</strong><span>Roupas, Calçado, Electro</span><div class="ctnote">Perfumes, acessórios e muito mais</div></div>
+  </div>
+</section>
+<div class="wa-section reveal">
+  <div class="wa-card" onclick="openWA()">
+    <div class="wa-card-l">
+      <h3>Fale connosco no WhatsApp</h3>
+      <p>Resposta rápida · Orçamentos · Informações sobre envios</p>
+      <div class="wanum">🇵🇹 +351 929 201 880</div>
+    </div>
+    <button class="wa-btn-card">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="#075E54"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a8.6 8.6 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.918.5C5.584.5.5 5.584.5 11.918c0 2.151.578 4.166 1.583 5.902L.5 23.5l5.82-1.552c1.669.912 3.58 1.436 5.598 1.436 6.334 0 11.418-5.084 11.418-11.418S18.252.5 11.918.5zm0 20.836c-1.834 0-3.553-.49-5.038-1.347l-.361-.214-3.754 1.001 1.014-3.664-.233-.375C2.485 15.371 2 13.71 2 11.918 2 6.415 6.415 2 11.918 2s9.918 4.415 9.918 9.918-4.415 9.418-9.918 9.418z"/></svg>
+      Enviar mensagem
+    </button>
+  </div>
+</div>
+<footer>
+  <div class="ftinner">
+    <div style="display:flex;align-items:center;gap:10px">
+      <svg width="28" height="28" viewBox="0 0 200 200" fill="none"><circle cx="100" cy="100" r="100" fill="#F07800"/><path d="M140 55C130 50 110 52 95 65 85 73 78 88 78 88 78 88 68 84 55 85 46 86 38 91 34 98 42 97 52 100 58 106 50 112 44 124 43 136 52 130 65 124 76 123 76 131 79 142 85 150 90 140 92 128 91 118 102 113 115 106 124 99 120 110 120 122 120 132 130 120 137 104 138 91 139 83 138 70 140 55Z" fill="white"/></svg>
+      <span class="ftcopy"><strong style="color:rgba(255,255,255,.5)">FLY WAY Logistics</strong> &copy; 2025</span>
+    </div>
+    <span class="ftadmin" onclick="showAdminLogin()">⚙ Área Admin</span>
+  </div>
+</footer>
+</div>
+
+<!-- ═══ TRACKING ═══ -->
+<div id="view-tracking" class="hidden" style="padding:100px 6% 60px;min-height:100vh;background:var(--gy)">
+  <button class="back-btn" onclick="goHome()">← Voltar ao início</button>
+  <div id="t-content"></div>
+</div>
+
+<!-- ═══ ADMIN LOGIN ═══ -->
+<div id="view-admin-login" class="hidden">
+  <div class="lg-card">
+    <div style="text-align:center;margin-bottom:28px">
+      <svg width="52" height="52" viewBox="0 0 200 200" fill="none" style="display:inline-block"><circle cx="100" cy="100" r="100" fill="#F07800"/><path d="M140 55C130 50 110 52 95 65 85 73 78 88 78 88 78 88 68 84 55 85 46 86 38 91 34 98 42 97 52 100 58 106 50 112 44 124 43 136 52 130 65 124 76 123 76 131 79 142 85 150 90 140 92 128 91 118 102 113 115 106 124 99 120 110 120 122 120 132 130 120 137 104 138 91 139 83 138 70 140 55Z" fill="white"/></svg>
+    </div>
+    <h2>Área Admin</h2>
+    <p>Gestão de encomendas FLY WAY</p>
+    <div class="err-box" id="lg-err">Senha incorrecta.</div>
+    <div class="fg"><label class="fl">Senha de acesso</label><input class="fi" type="password" id="adm-pw" placeholder="Insira a senha" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <button class="fbtn" onclick="doLogin()">Entrar</button>
+    <div class="back-lnk" onclick="goHome()">← Voltar ao site</div>
+  </div>
+</div>
+
+<!-- ═══ ADMIN PANEL ═══ -->
+<div id="view-admin" class="hidden">
+  <div class="admbar">
+    <div style="display:flex;align-items:center;gap:10px">
+      <svg width="30" height="30" viewBox="0 0 200 200" fill="none"><circle cx="100" cy="100" r="100" fill="#F07800"/><path d="M140 55C130 50 110 52 95 65 85 73 78 88 78 88 78 88 68 84 55 85 46 86 38 91 34 98 42 97 52 100 58 106 50 112 44 124 43 136 52 130 65 124 76 123 76 131 79 142 85 150 90 140 92 128 91 118 102 113 115 106 124 99 120 110 120 122 120 132 130 120 137 104 138 91 139 83 138 70 140 55Z" fill="white"/></svg>
+      <span style="font-size:17px;font-weight:800;color:white;letter-spacing:-.5px">FLY WAY <span style="color:var(--or)">Admin</span></span>
+      <span id="api-status-badge" class="api-status api-none" style="margin-left:8px">● Sheets: não configurado</span>
+    </div>
+    <div class="admacts">
+      <button class="ab ab-or" onclick="openNewOrd()">+ Nova Encomenda</button>
+      <button class="ab ab-gh" onclick="openSett()">⚙ Definições</button>
+      <button class="ab ab-gh" onclick="goHome()">Sair</button>
+    </div>
+  </div>
+  <div class="admbody">
+    <div class="admtabs">
+      <button class="atab active" onclick="switchTab('o')">Encomendas</button>
+      <button class="atab" onclick="switchTab('s')">Estatísticas</button>
+      <button class="atab" onclick="switchTab('g')">Guia Sheets</button>
+    </div>
+    <div id="tab-o">
+      <div class="tblcard">
+        <div class="tblhd">
+          <h3>Encomendas <span style="font-size:12px;font-weight:500;color:var(--mt)" id="orders-count"></span></h3>
+          <div class="tblhd-right">
+            <input class="srch" type="text" id="adm-srch" placeholder="Pesquisar..." oninput="filterOrds()">
+            <button class="refresh-btn" onclick="renderOrds()" title="Recarregar do Sheets">🔄 Atualizar</button>
+          </div>
+        </div>
+        <div id="ords-body" style="overflow-x:auto"></div>
+      </div>
+    </div>
+    <div id="tab-s" class="hidden"><div class="st-grid" id="st-body"></div></div>
+    <div id="tab-g" class="hidden">
+      <div class="setup-guide">
+        <h3>📊 Guia — Ligar ao Google Sheets</h3>
+        <div class="step-guide"><div class="sg-num">1</div><div class="sg-text"><strong>Criar o Google Sheets</strong><span>Abra o Google Sheets e crie uma folha de cálculo nova. Dê o nome "FLY WAY Logistics".</span><br><a class="sg-link" href="https://sheets.new" target="_blank">↗ Abrir Google Sheets</a></div></div>
+        <div class="step-guide"><div class="sg-num">2</div><div class="sg-text"><strong>Abrir o Apps Script</strong><span>No Sheets, clique em <code>Extensões</code> → <code>Apps Script</code>. Apague todo o código existente.</span></div></div>
+        <div class="step-guide"><div class="sg-num">3</div><div class="sg-text"><strong>Colar o código</strong><span>Cole o conteúdo do ficheiro <code>flyway-apps-script.js</code> (que descarregou junto com este site). Guarde com Ctrl+S.</span></div></div>
+        <div class="step-guide"><div class="sg-num">4</div><div class="sg-text"><strong>Executar a função "testar"</strong><span>Seleccione a função <code>testar</code> no menu e clique em ▶ Executar. Autorize o acesso quando pedido. Isto cria a folha com os cabeçalhos correctos.</span></div></div>
+        <div class="step-guide"><div class="sg-num">5</div><div class="sg-text"><strong>Publicar como Aplicação Web</strong><span>Clique em <code>Implementar</code> → <code>Nova implementação</code>. Tipo: <code>Aplicação Web</code>. Executar como: <code>Eu</code>. Acesso: <code>Qualquer pessoa</code>. Clique em <code>Implementar</code> e <strong>copie o URL</strong>.</span></div></div>
+        <div class="step-guide"><div class="sg-num">6</div><div class="sg-text"><strong>Colar o URL nas Definições</strong><span>Volte ao Admin → clique em <code>⚙ Definições</code> → cole o URL no campo "URL do Google Apps Script".</span></div></div>
+        <div class="step-guide"><div class="sg-num">7</div><div class="sg-text"><strong>Testar a ligação</strong><span>Clique em "Testar Ligação" nas Definições. Se aparecer ✅ verde, está tudo ligado!</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Order -->
+<div class="overlay hidden" id="mod-ord">
+  <div class="modal">
+    <div class="mdlhd"><h3 id="mod-ord-ttl">Nova Encomenda</h3><button class="mdlx" onclick="closeM('mod-ord')">✕</button></div>
+    <div class="suc-box" id="ord-suc">Guardado no Google Sheets! ✅</div>
+    <div class="err-box" id="ord-err">Erro ao guardar.</div>
+    <input type="hidden" id="eid">
+    <div class="f2">
+      <div class="fg"><label class="fl">N.º Rastreio *</label><input class="fi" type="text" id="fi-id" placeholder="FW-001234"></div>
+      <div class="fg"><label class="fl">Nome Cliente *</label><input class="fi" type="text" id="fi-nm" placeholder="Nome completo"></div>
+    </div>
+    <div class="f2">
+      <div class="fg"><label class="fl">Telefone do Cliente</label><input class="fi" type="text" id="fi-ph" placeholder="+258 ..."></div>
+      <div class="fg"><label class="fl">Descrição</label><input class="fi" type="text" id="fi-ds" placeholder="Ex: Roupas"></div>
+    </div>
+    <div class="f2">
+      <div class="fg"><label class="fl">Origem *</label><input class="fi" type="text" id="fi-or" placeholder="Ex: Porto"></div>
+      <div class="fg"><label class="fl">Destino *</label><input class="fi" type="text" id="fi-de" placeholder="Ex: Maputo"></div>
+    </div>
+    <div class="fg"><label class="fl">Status inicial</label>
+      <select class="fsel" id="fi-st">
+        <option value="Encomenda Registada">📦 Encomenda Registada</option>
+        <option value="Recolhida">✅ Recolhida</option>
+        <option value="Em Trânsito">🚛 Em Trânsito</option>
+        <option value="Na Alfândega">🛃 Na Alfândega</option>
+        <option value="Em Distribuição">🏍️ Em Distribuição</option>
+        <option value="Entregue">🎉 Entregue</option>
+        <option value="Tentativa Falhada">⚠️ Tentativa Falhada</option>
+      </select>
+    </div>
+    <div class="fg"><label class="fl">Observações</label><textarea class="fta" id="fi-no" placeholder="Detalhes adicionais..."></textarea></div>
+    <div class="mdlft"><button class="mdl-cancel" onclick="closeM('mod-ord')">Cancelar</button><button class="mdl-ok" onclick="saveOrd()">Guardar no Sheets</button></div>
+  </div>
+</div>
+
+<!-- MODAL: Update -->
+<div class="overlay hidden" id="mod-upd">
+  <div class="modal">
+    <div class="mdlhd"><h3 id="upd-ttl">Atualizar Status</h3><button class="mdlx" onclick="closeUpdModal()">✕</button></div>
+    <div id="upd-form">
+      <input type="hidden" id="uid">
+      <div class="fg"><label class="fl">Encomenda</label><input class="fi" type="text" id="u-ref" disabled></div>
+      <div class="f2">
+        <div class="fg"><label class="fl">Novo Status</label>
+          <select class="fsel" id="u-st">
+            <option value="Encomenda Registada">📦 Encomenda Registada</option>
+            <option value="Recolhida">✅ Recolhida</option>
+            <option value="Em Trânsito">🚛 Em Trânsito</option>
+            <option value="Na Alfândega">🛃 Na Alfândega</option>
+            <option value="Em Distribuição">🏍️ Em Distribuição</option>
+            <option value="Entregue">🎉 Entregue</option>
+            <option value="Tentativa Falhada">⚠️ Tentativa Falhada</option>
+          </select>
+        </div>
+        <div class="fg"><label class="fl">Localização actual</label><input class="fi" type="text" id="u-loc" placeholder="Ex: Beira"></div>
+      </div>
+      <div class="fg"><label class="fl">Observações (opcional)</label><textarea class="fta" id="u-no" placeholder="Detalhes desta actualização..."></textarea></div>
+      <div class="fg"><label class="fl">Histórico</label><div class="hl-list" id="u-hist"></div></div>
+      <div class="mdlft"><button class="mdl-cancel" onclick="closeUpdModal()">Cancelar</button><button class="mdl-ok" onclick="saveUpd()">Atualizar Status</button></div>
+    </div>
+    <div id="upd-wa" class="hidden">
+      <div style="text-align:center;padding:8px 0 20px">
+        <div style="width:56px;height:56px;background:#DCFCE7;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 12px">✅</div>
+        <div style="font-size:18px;font-weight:800;color:var(--bk);letter-spacing:-.5px">Status actualizado no Sheets!</div>
+        <div style="font-size:13px;color:var(--mt);margin-top:4px">Quer notificar o cliente via WhatsApp?</div>
+      </div>
+      <div style="background:#E7FFDB;border-radius:12px;padding:18px;margin-bottom:16px;border:1px solid #C3F0A0">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#3D7A1E;margin-bottom:10px">Pré-visualização WhatsApp</div>
+        <div id="wa-preview" style="font-size:13px;color:var(--tx);line-height:1.7;white-space:pre-wrap"></div>
+      </div>
+      <div id="wa-cinfo" style="background:var(--gy);border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:13px;display:flex;align-items:center;gap:10px">
+        <span style="font-size:18px">📱</span>
+        <div><div style="font-weight:700;color:var(--bk)" id="wa-cname"></div><div style="color:var(--mt);font-size:12px" id="wa-cphone"></div></div>
+      </div>
+      <div class="fg"><label class="fl">Editar mensagem (opcional)</label><textarea class="fta" id="wa-edit" style="min-height:120px;font-size:13px;line-height:1.7" oninput="document.getElementById('wa-preview').textContent=this.value"></textarea></div>
+      <div class="mdlft" style="flex-direction:column;gap:10px">
+        <button id="wa-send-btn" onclick="sendWA()" style="width:100%;padding:14px;background:#25D366;color:white;border:none;border-radius:8px;font-weight:700;font-size:15px;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .2s">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a8.6 8.6 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.918.5C5.584.5.5 5.584.5 11.918c0 2.151.578 4.166 1.583 5.902L.5 23.5l5.82-1.552c1.669.912 3.58 1.436 5.598 1.436 6.334 0 11.418-5.084 11.418-11.418S18.252.5 11.918.5zm0 20.836c-1.834 0-3.553-.49-5.038-1.347l-.361-.214-3.754 1.001 1.014-3.664-.233-.375C2.485 15.371 2 13.71 2 11.918 2 6.415 6.415 2 11.918 2s9.918 4.415 9.918 9.918-4.415 9.418-9.918 9.418z"/></svg>
+          Enviar WhatsApp ao cliente
+        </button>
+        <button onclick="closeUpdModal()" style="width:100%;padding:11px;border:2px solid var(--bd);background:white;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;color:var(--mt);font-family:'Inter',sans-serif">Fechar sem enviar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Settings -->
+<div class="overlay hidden" id="mod-set">
+  <div class="modal">
+    <div class="mdlhd"><h3>Definições</h3><button class="mdlx" onclick="closeM('mod-set')">✕</button></div>
+    <div class="suc-box" id="set-suc">Guardado!</div>
+    <div class="err-box" id="set-err"></div>
+
+    <div style="background:linear-gradient(135deg,#E7FFDB,#F0FFF4);border-radius:10px;padding:16px;margin-bottom:20px;border:1px solid #C3F0A0">
+      <label class="fl" style="color:#15803D">URL do Google Apps Script (obrigatório)</label>
+      <div style="display:flex;gap:8px;align-items:flex-start">
+        <input class="fi" type="text" id="s-api" placeholder="https://script.google.com/macros/s/.../exec" style="font-size:12px;flex:1">
+        <button onclick="testApi()" style="padding:13px 16px;background:#15803D;color:white;border:none;border-radius:8px;font-weight:700;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap;transition:all .2s">Testar ✓</button>
+      </div>
+      <div id="api-test-result" style="margin-top:8px;font-size:12px;font-weight:600;display:none"></div>
+      <p style="font-size:11px;color:#3D7A1E;margin-top:8px">Cole aqui o URL gerado ao publicar o Apps Script. Consulte o separador "Guia Sheets" para instruções.</p>
+    </div>
+
+    <div class="f2">
+      <div class="fg"><label class="fl">Número Portugal (exibido)</label><input class="fi" type="text" id="s-pt" placeholder="+351 929 201 880"></div>
+      <div class="fg"><label class="fl">Número Moçambique (exibido)</label><input class="fi" type="text" id="s-mz" placeholder="+258 87 342 9076"></div>
+    </div>
+    <div class="fg"><label class="fl">WhatsApp Portugal (sem +, para envio)</label><input class="fi" type="text" id="s-wa" placeholder="351929201880"></div>
+    <div class="fg"><label class="fl">Endereço / Localização</label><input class="fi" type="text" id="s-ad" placeholder="Porto, Portugal · Maputo, Moçambique"></div>
+    <hr style="border:none;border-top:1px solid var(--bd);margin:18px 0">
+    <div class="f2">
+      <div class="fg"><label class="fl">Nova senha (vazio = sem alteração)</label><input class="fi" type="password" id="s-np" placeholder="Nova senha"></div>
+      <div class="fg"><label class="fl">Confirmar nova senha</label><input class="fi" type="password" id="s-cp" placeholder="Repetir"></div>
+    </div>
+    <div class="mdlft"><button class="mdl-cancel" onclick="closeM('mod-set')">Cancelar</button><button class="mdl-ok" onclick="saveSett()">Guardar</button></div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════
+// CONFIG (localStorage — apenas admin)
+// ═══════════════════════════════════════════════════
+const CFG_KEY='fw_cfg_v4';
+function loadCfg(){try{const r=localStorage.getItem(CFG_KEY);if(r)return JSON.parse(r);}catch(e){}return{apiUrl:'',wa:'351929201880',pt:'+351 929 201 880',mz:'+258 87 342 9076',addr:'Porto, Portugal · Maputo, Moçambique',pass:'flyway2024'};}
+function saveCfg(c){localStorage.setItem(CFG_KEY,JSON.stringify(c));}
+let CFG=loadCfg();
+
+function applyConfig(){
+  const el=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+  el('d-pt',CFG.pt);el('d-mz',CFG.mz);
+}
+applyConfig();
+
+// Cache local de encomendas (para filtrar sem ir ao Sheets)
+let ordersCache=[];
+
+// ═══════════════════════════════════════════════════
+// API — Google Sheets via Apps Script
+// ═══════════════════════════════════════════════════
+async function apiCall(params){
+  const url=CFG.apiUrl;
+  if(!url)throw new Error('URL do Apps Script não configurado. Vá a ⚙ Definições.');
+  const qs=new URLSearchParams(params).toString();
+  const res=await fetch(`${url}?${qs}`,{redirect:'follow'});
+  const text=await res.text();
+  try{return JSON.parse(text);}catch(e){throw new Error('Resposta inválida do servidor.');}
+}
+
+async function apiGetOrder(id){return apiCall({action:'getOrder',id});}
+async function apiGetAll(){return apiCall({action:'getAll'});}
+async function apiSave(order){
+  const data=encodeURIComponent(JSON.stringify(order));
+  return apiCall({action:'save',data});
+}
+async function apiDelete(id){return apiCall({action:'delete',id});}
+
+// ═══════════════════════════════════════════════════
+// LOADING OVERLAY
+// ═══════════════════════════════════════════════════
+function showLoad(msg='A carregar...'){
+  document.getElementById('loading-msg').textContent=msg;
+  document.getElementById('loading-overlay').classList.remove('hidden');
+}
+function hideLoad(){document.getElementById('loading-overlay').classList.add('hidden');}
+
+// ═══════════════════════════════════════════════════
+// CANVAS ANIMATIONS
+// ═══════════════════════════════════════════════════
+(function(){
+  const c=document.getElementById('hero-canvas');const ctx=c.getContext('2d');let W,H,pts=[];
+  function resize(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;}
+  window.addEventListener('resize',resize);resize();
+  for(let i=0;i<80;i++)pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,r:Math.random()*2+.5,a:Math.random()*.4+.1});
+  const route=[{x:.1,y:.7},{x:.25,y:.4},{x:.4,y:.55},{x:.55,y:.3},{x:.7,y:.5},{x:.85,y:.35},{x:.95,y:.55}];
+  let rp=0;let t=0;
+  function frame(){
+    ctx.clearRect(0,0,W,H);t+=.005;
+    for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){
+      const d=Math.hypot(pts[i].x-pts[j].x,pts[i].y-pts[j].y);
+      if(d<120){ctx.beginPath();ctx.strokeStyle=`rgba(240,120,0,${.07*(1-d/120)})`;ctx.lineWidth=.5;ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.stroke();}
+    }
+    pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(240,120,0,${p.a})`;ctx.fill();});
+    rp=(rp+.002)%1;const tot=route.length-1;const seg=rp*tot;const si=Math.floor(seg);const sf=seg-si;
+    ctx.beginPath();ctx.strokeStyle='rgba(240,120,0,.15)';ctx.lineWidth=1.5;ctx.setLineDash([6,8]);ctx.moveTo(route[0].x*W,route[0].y*H);route.forEach(p=>ctx.lineTo(p.x*W,p.y*H));ctx.stroke();ctx.setLineDash([]);
+    if(si<tot){const a=route[si],b=route[si+1];const tx=a.x*W+(b.x*W-a.x*W)*sf,ty=a.y*H+(b.y*H-a.y*H)*sf;ctx.save();ctx.translate(tx,ty);ctx.font='18px serif';ctx.fillText('✈️',-9,-9);ctx.restore();}
+    route.forEach((p,i)=>{const pl=Math.sin(t*2+i)*.3+.7;ctx.beginPath();ctx.arc(p.x*W,p.y*H,5*pl,0,Math.PI*2);ctx.fillStyle=`rgba(240,120,0,${.6*pl})`;ctx.fill();});
+    requestAnimationFrame(frame);
+  }frame();
+})();
+
+(function(){
+  const c=document.getElementById('reel-canvas');if(!c)return;const ctx=c.getContext('2d');let W,H;
+  function resize(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;}
+  window.addEventListener('resize',resize);resize();
+  const cities=[{name:'Porto',x:.18,y:.32,size:7},{name:'Maputo',x:.54,y:.72,size:7},{name:'Beira',x:.54,y:.63,size:4},{name:'Nampula',x:.57,y:.55,size:4}];
+  const pkgs=[];for(let i=0;i<6;i++)pkgs.push({x:Math.random(),y:Math.random(),vx:.0008+Math.random()*.001,vy:-.0004-Math.random()*.0005,size:3+Math.random()*4});
+  let rp=0;let t=0;
+  function frame(){
+    ctx.clearRect(0,0,W,H);t+=.008;
+    ctx.strokeStyle='rgba(240,120,0,.05)';ctx.lineWidth=.5;
+    for(let i=0;i<=20;i++){ctx.beginPath();ctx.moveTo(i/20*W,0);ctx.lineTo(i/20*W,H);ctx.stroke();ctx.beginPath();ctx.moveTo(0,i/20*H);ctx.lineTo(W,i/20*H);ctx.stroke();}
+    rp=(rp+.003)%1;const px=cities[0].x*W,py=cities[0].y*H,mx=cities[1].x*W,my=cities[1].y*H;const cx=(px+mx)/2,cy=Math.min(py,my)-H*.35;
+    const tp=rp;const bx=(1-tp)*(1-tp)*px+2*(1-tp)*tp*cx+tp*tp*mx;const by=(1-tp)*(1-tp)*py+2*(1-tp)*tp*cy+tp*tp*my;
+    ctx.beginPath();ctx.moveTo(px,py);ctx.quadraticCurveTo(cx,cy,mx,my);ctx.strokeStyle='rgba(240,120,0,.12)';ctx.lineWidth=1.5;ctx.setLineDash([4,8]);ctx.stroke();ctx.setLineDash([]);
+    ctx.save();const dx=2*(1-tp)*(cx-px)+2*tp*(mx-cx);const dy=2*(1-tp)*(cy-py)+2*tp*(my-cy);ctx.translate(bx,by);ctx.rotate(Math.atan2(dy,dx));ctx.font='18px serif';ctx.fillText('✈️',-9,-9);ctx.restore();
+    cities.forEach((city,i)=>{const pl=Math.sin(t+i*1.2)*.3+.7;ctx.beginPath();ctx.arc(city.x*W,city.y*H,city.size*pl,0,Math.PI*2);ctx.fillStyle=`rgba(240,120,0,${.7*pl})`;ctx.fill();if(city.size>=5){ctx.fillStyle='rgba(255,255,255,.7)';ctx.font='bold 11px Inter,sans-serif';ctx.fillText(city.name,city.x*W+12,city.y*H+4);}});
+    pkgs.forEach(pk=>{pk.x+=pk.vx;pk.y+=pk.vy;if(pk.x>1.1)pk.x=-0.1;if(pk.y<-0.1)pk.y=1.1;ctx.save();ctx.globalAlpha=.45;ctx.font=`${pk.size*3}px serif`;ctx.fillText('📦',pk.x*W,pk.y*H);ctx.restore();});
+    const sl=(t*60)%H;const g=ctx.createLinearGradient(0,sl-20,0,sl+20);g.addColorStop(0,'rgba(240,120,0,0)');g.addColorStop(.5,'rgba(240,120,0,.03)');g.addColorStop(1,'rgba(240,120,0,0)');ctx.fillStyle=g;ctx.fillRect(0,sl-20,W,40);
+    requestAnimationFrame(frame);
+  }frame();
+})();
+
+// ═══════════════════════════════════════════════════
+// SCROLL ANIMATIONS + COUNTERS
+// ═══════════════════════════════════════════════════
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+function animCount(el,target,suf=''){let c=0;const step=target/60;const ti=setInterval(()=>{c=Math.min(c+step,target);el.textContent=Math.floor(c)+(c>=target?suf:'');if(c>=target)clearInterval(ti);},25);}
+const cobs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('[data-count]').forEach(el=>animCount(el,parseInt(el.dataset.count),'+'));e.target.querySelectorAll('[data-count2]').forEach(el=>animCount(el,parseInt(el.dataset.count2),''));cobs.unobserve(e.target);}});},{threshold:.3});
+document.querySelectorAll('.hstats,.reel-stats').forEach(el=>cobs.observe(el));
+window.addEventListener('scroll',()=>{const nav=document.getElementById('nav');if(!document.getElementById('view-main').classList.contains('hidden')){if(window.scrollY>80){nav.classList.add('scrolled');nav.classList.remove('light');}else{nav.classList.remove('scrolled');}}});
+
+// ═══════════════════════════════════════════════════
+// VIEWS
+// ═══════════════════════════════════════════════════
+function show(id){
+  ['view-main','view-tracking','view-admin-login','view-admin'].forEach(v=>document.getElementById(v).classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+  const nav=document.getElementById('nav');
+  nav.style.display=id==='view-main'?'':'none';
+  window.scrollTo(0,0);
+}
+function goHome(){show('view-main');}
+function showAdminLogin(){show('view-admin-login');}
+function scrollToTrack(){show('view-main');setTimeout(()=>{document.querySelector('.track-box').scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>document.getElementById('t-inp').focus(),400);},100);}
+function toggleMob(){document.getElementById('mob-menu').classList.toggle('open');}
+function closeMob(){document.getElementById('mob-menu').classList.remove('open');}
+
+// ═══════════════════════════════════════════════════
+// TRACKING (vai ao Google Sheets)
+// ═══════════════════════════════════════════════════
+async function doTrack(){
+  const num=document.getElementById('t-inp').value.trim().toUpperCase();
+  const err=document.getElementById('t-err');
+  err.style.display='none';
+  if(!num){err.textContent='Por favor insira um número de rastreio.';err.style.display='block';return;}
+  if(!CFG.apiUrl){err.textContent='Sistema de rastreio temporariamente indisponível. Contacte-nos via WhatsApp.';err.style.display='block';return;}
+  showLoad('A pesquisar a encomenda...');
+  try{
+    const data=await apiGetOrder(num);
+    hideLoad();
+    if(data.order){buildTrack(data.order);show('view-tracking');}
+    else{err.textContent='Encomenda não encontrada. Verifique o número e tente novamente.';err.style.display='block';}
+  }catch(e){
+    hideLoad();
+    err.textContent='Erro ao ligar ao servidor. Tente novamente ou contacte-nos.';
+    err.style.display='block';
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// BUILD TRACKING VIEW
+// ═══════════════════════════════════════════════════
+const STS=['Encomenda Registada','Recolhida','Em Trânsito','Na Alfândega','Em Distribuição','Entregue'];
+const EM={'Encomenda Registada':'📦','Recolhida':'✅','Em Trânsito':'🚛','Na Alfândega':'🛃','Em Distribuição':'🏍️','Entregue':'🎉','Tentativa Falhada':'⚠️'};
+function stIdx(s){const i=STS.indexOf(s);return i<0?0:i;}
+function pillCls(s){if(s==='Entregue')return'sp-del';if(['Em Trânsito','Na Alfândega','Em Distribuição','Recolhida'].includes(s))return'sp-tr';if(s==='Tentativa Falhada')return'sp-fa';return'sp-pe';}
+function sbCls(s){if(s==='Entregue')return'sb-de';if(s==='Em Trânsito')return'sb-tr';if(s==='Na Alfândega')return'sb-cu';if(s==='Em Distribuição')return'sb-di';if(s==='Tentativa Falhada')return'sb-fa';if(s==='Recolhida')return'sb-tr';return'sb-re';}
+
+function buildPS(cur,evts){
+  const em={};(evts||[]).forEach(e=>{if(!em[e.status])em[e.status]=e;});
+  const ci=stIdx(cur),fail=cur==='Tentativa Falhada';
+  return STS.map((s,i)=>{
+    let nc='nd-pending',tick='';
+    if(!fail){if(i<ci){nc='nd-done';tick='<div class="ps-tick">✓</div>';}else if(i===ci)nc='nd-active';}
+    const ev=em[s];
+    return `<div class="ps-wrap ${i===ci?'active-wrap':''}">
+      <div class="ps-node ${nc}" style="position:relative"><span class="ps-emoji">${EM[s]||'📦'}</span>${tick}</div>
+      ${i<STS.length-1?`<div class="ps-conn ${!fail&&i<ci?'done':''}"></div>`:''}
+      <div class="ps-name">${s.replace('Encomenda ','')}</div>
+      <div class="ps-date">${ev?ev.date:''}</div>
+    </div>`;
+  }).join('');
+}
+
+function buildAnim(status,origin,dest){
+  if(status==='Entregue')return`<div class="a-delivered"><div class="dei">🎉</div><div class="det"><strong>Entregue!</strong><span>A sua encomenda chegou ao destino</span></div><div class="dei">📦</div></div>`;
+  if(status==='Tentativa Falhada')return`<div class="a-delivered"><div style="font-size:52px">⚠️</div><div class="det"><strong style="color:var(--rd)">Tentativa falhada</strong><span>Contacte-nos para reagendar</span></div></div>`;
+  const pct=Math.min(Math.round((stIdx(status)/(STS.length-1))*80)+5,85);
+  return`<div style="font-size:28px;position:absolute;left:32px;bottom:40px;z-index:2">📦</div>
+  <div class="truck-wrap" style="left:${pct}%">
+    <svg width="90" height="54" viewBox="0 0 90 54" fill="none">
+      <rect x="2" y="12" width="56" height="30" rx="5" fill="#F07800"/>
+      <rect x="58" y="18" width="26" height="24" rx="4" fill="#D96800"/>
+      <rect x="4" y="14" width="22" height="14" rx="3" fill="rgba(255,255,255,0.3)"/>
+      <rect x="62" y="20" width="16" height="12" rx="3" fill="rgba(255,255,255,0.2)"/>
+      <circle cx="18" cy="46" r="6" fill="#1A1A1A"/><circle cx="18" cy="46" r="3" fill="#555"/>
+      <circle cx="68" cy="46" r="6" fill="#1A1A1A"/><circle cx="68" cy="46" r="3" fill="#555"/>
+      <circle cx="6" cy="26" r="3" fill="#FFCC00"/>
+    </svg>
+  </div>
+  <div style="font-size:28px;position:absolute;right:32px;bottom:38px;z-index:2">🏠</div>
+  <div class="road"><div class="road-bg"></div><div class="road-dash"></div></div>
+  <div class="rl-l">${origin}</div><div class="rl-r">${dest}</div>`;
+}
+
+function buildTrack(order){
+  const evts=order.events||[];const lat=evts[evts.length-1]||{};
+  const rev=[...evts].reverse();
+  const tl=rev.map((ev,i)=>{const first=i===0,last=i===rev.length-1;return`<div class="tl-row">
+    <div class="tl-col"><div class="tl-dot ${first?'td-a':'td-d'}">${EM[ev.status]||'📦'}</div>${!last?`<div class="tl-line ${first?'':'done'}"></div>`:''}</div>
+    <div class="tl-info"><strong>${ev.status}</strong>${ev.location?`<div class="tl-loc">📍 ${ev.location}</div>`:''}<div class="tl-dt">🕐 ${ev.date}${ev.time?' às '+ev.time:''}</div>${ev.notes?`<div class="tl-note">${ev.notes}</div>`:''}</div>
+  </div>`;}).join('');
+  document.getElementById('t-content').innerHTML=`
+    <div class="tv-card">
+      <div class="tv-top">
+        <div><div class="tv-id-lbl">Número de rastreio</div><div class="tv-id">${order.id}</div><div class="tv-desc">${order.description||'Encomenda'} · ${order.origin} → ${order.destination}</div></div>
+        <div class="spill ${pillCls(lat.status)}">${EM[lat.status]||'📦'} ${lat.status||'Pendente'}</div>
+      </div>
+      <div class="tv-progress"><div class="tv-prog-lbl">Progresso da entrega</div><div class="prog-steps">${buildPS(lat.status,evts)}</div></div>
+      <div class="tv-anim">${buildAnim(lat.status,order.origin,order.destination)}</div>
+      <div class="tv-meta">
+        <div class="tv-meta-box"><strong>Cliente</strong><span>${order.customerName}</span></div>
+        <div class="tv-meta-box"><strong>Origem</strong><span>${order.origin}</span></div>
+        <div class="tv-meta-box"><strong>Destino</strong><span>${order.destination}</span></div>
+        <div class="tv-meta-box"><strong>Registada</strong><span>${order.createdAt}</span></div>
+        ${order.phone?`<div class="tv-meta-box"><strong>Contacto</strong><span>${order.phone}</span></div>`:''}
+      </div>
+    </div>
+    <div class="tl-card"><div class="tl-head"><span style="font-size:18px">📋</span><h3>Histórico de Movimentos</h3></div><div class="tl-body">${tl}</div></div>`;
+}
+
+// ═══════════════════════════════════════════════════
+// ADMIN
+// ═══════════════════════════════════════════════════
+function updateApiStatusBadge(){
+  const el=document.getElementById('api-status-badge');
+  if(!el)return;
+  if(!CFG.apiUrl){el.className='api-status api-none';el.textContent='● Sheets: não configurado';}
+  else{el.className='api-status api-ok';el.textContent='● Sheets: ligado';}
+}
+
+function doLogin(){
+  CFG=loadCfg();
+  if(document.getElementById('adm-pw').value===CFG.pass){
+    document.getElementById('adm-pw').value='';
+    document.getElementById('lg-err').style.display='none';
+    show('view-admin');
+    updateApiStatusBadge();
+    renderOrds();
+  }else{document.getElementById('lg-err').style.display='block';}
+}
+
+function switchTab(t){
+  document.querySelectorAll('.atab').forEach((el,i)=>el.classList.toggle('active',(['o','s','g'].indexOf(t)===i)));
+  ['tab-o','tab-s','tab-g'].forEach((id,i)=>document.getElementById(id).classList.toggle('hidden',['o','s','g'].indexOf(t)!==i));
+  if(t==='s')renderStats();
+}
+
+async function renderOrds(){
+  const el=document.getElementById('ords-body');
+  el.innerHTML=`<div class="empty"><div class="spin" style="margin:0 auto 16px"></div><p style="font-weight:500;font-size:14px;color:var(--mt)">A carregar do Google Sheets...</p></div>`;
+  if(!CFG.apiUrl){
+    el.innerHTML=`<div class="empty"><span class="eico">📊</span><p>Google Sheets não configurado</p><small style="color:var(--mt);display:block;margin-top:8px">Clique em ⚙ Definições para adicionar o URL do Apps Script.<br>Consulte o separador "Guia Sheets" para instruções.</small></div>`;
+    return;
+  }
+  try{
+    const data=await apiGetAll();
+    ordersCache=data.orders||[];
+    document.getElementById('orders-count').textContent=`(${ordersCache.length})`;
+    renderOrdsTable(ordersCache);
+  }catch(e){
+    el.innerHTML=`<div class="empty"><span class="eico">⚠️</span><p>Erro ao ligar ao Sheets</p><small style="color:var(--rd)">${e.message}</small></div>`;
+  }
+}
+
+function filterOrds(){
+  const q=(document.getElementById('adm-srch')?.value||'').toLowerCase();
+  const filtered=q?ordersCache.filter(o=>o.id.toLowerCase().includes(q)||o.customerName.toLowerCase().includes(q)||(o.destination||'').toLowerCase().includes(q)):ordersCache;
+  renderOrdsTable(filtered);
+}
+
+function renderOrdsTable(ords){
+  const el=document.getElementById('ords-body');
+  const sorted=[...ords].sort((a,b)=>b.createdAt.localeCompare(a.createdAt));
+  if(!sorted.length){el.innerHTML=`<div class="empty"><span class="eico">📦</span><p>Nenhuma encomenda encontrada</p></div>`;return;}
+  el.innerHTML=`<table><thead><tr><th>Rastreio</th><th>Cliente</th><th>Rota</th><th>Status</th><th>Data</th><th>Acções</th></tr></thead><tbody>${
+    sorted.map(o=>{const lat=(o.events||[]).slice(-1)[0]||{};return`<tr>
+      <td><strong style="font-size:16px;font-weight:800;letter-spacing:-.5px">${o.id}</strong></td>
+      <td>${o.customerName}<br><small style="color:var(--mt)">${o.phone||''}</small></td>
+      <td style="white-space:nowrap;font-size:13px">${o.origin} → ${o.destination}</td>
+      <td><span class="sbadge ${sbCls(lat.status)}">${EM[lat.status]||''} ${lat.status||'—'}</span></td>
+      <td style="font-size:13px">${o.createdAt}</td>
+      <td><div class="act-row">
+        <button class="ab ab-or" style="font-size:11px;padding:5px 10px" onclick="openUpd('${o.id}')">Atualizar</button>
+        <button class="ab ab-bl" style="font-size:11px;padding:5px 10px" onclick="openEdit('${o.id}')">Editar</button>
+        <button class="ab ab-rd" style="font-size:11px;padding:5px 10px" onclick="delOrd('${o.id}')">Apagar</button>
+      </div></td>
+    </tr>`}).join('')
+  }</tbody></table>`;
+}
+
+function renderStats(){
+  const all=ordersCache;const tot=all.length;
+  const del=all.filter(o=>(o.events||[]).slice(-1)[0]?.status==='Entregue').length;
+  const tr=all.filter(o=>['Em Trânsito','Em Distribuição','Na Alfândega','Recolhida'].includes((o.events||[]).slice(-1)[0]?.status)).length;
+  document.getElementById('st-body').innerHTML=`
+    <div class="stcard"><div class="stbig c-or">${tot}</div><div class="stlbl">Total</div></div>
+    <div class="stcard"><div class="stbig c-gr">${del}</div><div class="stlbl">Entregues</div></div>
+    <div class="stcard"><div class="stbig c-bl">${tr}</div><div class="stlbl">Em Trânsito</div></div>
+    <div class="stcard"><div class="stbig c-am">${tot-del-tr}</div><div class="stlbl">Pendentes</div></div>`;
+}
+
+// ─── CRUD ───────────────────────────────────────
+function openNewOrd(){
+  document.getElementById('mod-ord-ttl').textContent='Nova Encomenda';
+  document.getElementById('eid').value='';
+  ['fi-id','fi-nm','fi-ph','fi-ds','fi-or','fi-de','fi-no'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('fi-id').disabled=false;
+  document.getElementById('fi-st').value='Encomenda Registada';
+  hideA();openM('mod-ord');
+}
+function openEdit(id){
+  const o=ordersCache.find(x=>x.id===id);if(!o)return;
+  document.getElementById('mod-ord-ttl').textContent='Editar Encomenda';
+  document.getElementById('eid').value=id;
+  document.getElementById('fi-id').value=o.id;document.getElementById('fi-id').disabled=true;
+  document.getElementById('fi-nm').value=o.customerName;
+  document.getElementById('fi-ph').value=o.phone||'';
+  document.getElementById('fi-ds').value=o.description||'';
+  document.getElementById('fi-or').value=o.origin;
+  document.getElementById('fi-de').value=o.destination;
+  document.getElementById('fi-no').value='';
+  const lat=(o.events||[]).slice(-1)[0];if(lat)document.getElementById('fi-st').value=lat.status;
+  hideA();openM('mod-ord');
+}
+async function saveOrd(){
+  const eid=document.getElementById('eid').value;
+  const tid=document.getElementById('fi-id').value.trim().toUpperCase();
+  const nm=document.getElementById('fi-nm').value.trim();
+  const ph=document.getElementById('fi-ph').value.trim();
+  const ds=document.getElementById('fi-ds').value.trim();
+  const or=document.getElementById('fi-or').value.trim();
+  const de=document.getElementById('fi-de').value.trim();
+  const st=document.getElementById('fi-st').value;
+  const no=document.getElementById('fi-no').value.trim();
+  if(!tid||!nm||!or||!de){shA('ord-err','Preencha os campos obrigatórios.');return;}
+  if(!eid&&ordersCache.find(x=>x.id===tid)){shA('ord-err','Este número de rastreio já existe.');return;}
+  const now=new Date();const d=now.toLocaleDateString('pt-PT'),t=now.toLocaleTimeString('pt-PT',{hour:'2-digit',minute:'2-digit'});
+  let order;
+  if(eid){
+    order={...(ordersCache.find(x=>x.id===eid)||{}),customerName:nm,phone:ph,description:ds,origin:or,destination:de};
+  }else{
+    order={id:tid,customerName:nm,phone:ph,description:ds,origin:or,destination:de,createdAt:d,events:[{status:st,location:or,date:d,time:t,notes:no}]};
+  }
+  showLoad('A guardar no Google Sheets...');
+  try{
+    await apiSave(order);
+    hideLoad();
+    shA('ord-suc','Guardado no Google Sheets! ✅');
+    await renderOrds();
+    setTimeout(()=>closeM('mod-ord'),1400);
+  }catch(e){hideLoad();shA('ord-err','Erro: '+e.message);}
+}
+async function delOrd(id){
+  if(!confirm(`Apagar ${id} do Google Sheets? Irreversível.`))return;
+  showLoad('A apagar...');
+  try{await apiDelete(id);hideLoad();await renderOrds();}
+  catch(e){hideLoad();alert('Erro ao apagar: '+e.message);}
+}
+
+// ─── UPDATE + WHATSAPP ──────────────────────────
+function openUpd(id){
+  const o=ordersCache.find(x=>x.id===id);if(!o)return;
+  document.getElementById('uid').value=id;
+  document.getElementById('u-ref').value=`${o.id} — ${o.customerName}`;
+  const lat=(o.events||[]).slice(-1)[0];
+  if(lat){document.getElementById('u-st').value=lat.status;document.getElementById('u-loc').value=lat.location||'';}
+  document.getElementById('u-no').value='';
+  const evts=[...(o.events||[])].reverse();
+  document.getElementById('u-hist').innerHTML=evts.length?evts.map(e=>`<div class="hl-row"><span class="hls">${EM[e.status]||''} ${e.status}</span><span class="hld">${e.date} ${e.time||''}</span></div>`).join(''):'<div class="hl-row"><span class="hls" style="color:var(--mt)">Sem histórico</span></div>';
+  document.getElementById('upd-form').classList.remove('hidden');
+  document.getElementById('upd-wa').classList.add('hidden');
+  document.getElementById('upd-ttl').textContent='Atualizar Status';
+  openM('mod-upd');
+}
+async function saveUpd(){
+  const id=document.getElementById('uid').value;
+  const st=document.getElementById('u-st').value;
+  const loc=document.getElementById('u-loc').value.trim();
+  const no=document.getElementById('u-no').value.trim();
+  if(!id||!st)return;
+  const o=ordersCache.find(x=>x.id===id);if(!o)return;
+  const now=new Date();const d=now.toLocaleDateString('pt-PT'),t=now.toLocaleTimeString('pt-PT',{hour:'2-digit',minute:'2-digit'});
+  const updOrder={...o,events:[...(o.events||[]),{status:st,location:loc,date:d,time:t,notes:no}]};
+  showLoad('A guardar no Sheets...');
+  try{
+    await apiSave(updOrder);
+    hideLoad();
+    // Atualizar cache local
+    const idx=ordersCache.findIndex(x=>x.id===id);
+    if(idx>=0)ordersCache[idx]=updOrder;
+    renderOrdsTable(ordersCache);
+    // Mensagem WA
+    const msgs={'Encomenda Registada':'A sua encomenda foi registada e aguarda recolha.','Recolhida':'A sua encomenda foi recolhida com sucesso.','Em Trânsito':'A sua encomenda está em trânsito a caminho do destino.','Na Alfândega':'A sua encomenda está a ser processada na alfândega.','Em Distribuição':'A sua encomenda saiu para entrega hoje! Esteja disponível.','Entregue':'🎉 A sua encomenda foi entregue com sucesso! Obrigado por escolher a FLY WAY.','Tentativa Falhada':'Tentámos entregar mas não foi possível. Por favor contacte-nos.'};
+    const msg=`Olá ${o.customerName}! 👋\n\n*FLY WAY Logistics* — Actualização\n\n📦 Código: *${o.id}*\n${EM[st]||'📦'} Status: *${st}*${loc?'\n📍 Localização: '+loc:''}${no?'\n💬 '+no:''}\n\n${msgs[st]||''}\n\n🕐 ${d} às ${t}\n\n📞 Portugal: +351 929 201 880`;
+    document.getElementById('upd-form').classList.add('hidden');
+    document.getElementById('upd-wa').classList.remove('hidden');
+    document.getElementById('upd-ttl').textContent='Notificar Cliente';
+    document.getElementById('wa-preview').textContent=msg;
+    document.getElementById('wa-edit').value=msg;
+    document.getElementById('wa-cname').textContent=o.customerName;
+    const hasPhone=!!(o.phone&&o.phone.trim());
+    const phoneClean=(o.phone||'').replace(/[\s\+\-\(\)]/g,'');
+    document.getElementById('wa-cphone').innerHTML=hasPhone?`Telefone: <strong>${o.phone}</strong>`:'<span style="color:var(--rd);font-weight:600">⚠️ Sem telefone — edite a encomenda para adicionar</span>';
+    const btn=document.getElementById('wa-send-btn');
+    btn.disabled=!hasPhone;btn.style.opacity=hasPhone?'1':'.4';btn.setAttribute('data-phone',phoneClean);
+  }catch(e){hideLoad();alert('Erro ao actualizar: '+e.message);}
+}
+function sendWA(){const ph=document.getElementById('wa-send-btn').getAttribute('data-phone');const msg=document.getElementById('wa-edit').value;if(!ph)return;window.open(`https://wa.me/${ph}?text=${encodeURIComponent(msg)}`,'_blank');}
+function closeUpdModal(){closeM('mod-upd');document.getElementById('upd-form').classList.remove('hidden');document.getElementById('upd-wa').classList.add('hidden');}
+
+// ─── SETTINGS ──────────────────────────────────
+function openSett(){
+  CFG=loadCfg();
+  document.getElementById('s-api').value=CFG.apiUrl||'';
+  document.getElementById('s-pt').value=CFG.pt||'';
+  document.getElementById('s-mz').value=CFG.mz||'';
+  document.getElementById('s-wa').value=CFG.wa||'';
+  document.getElementById('s-ad').value=CFG.addr||'';
+  document.getElementById('s-np').value='';document.getElementById('s-cp').value='';
+  document.getElementById('set-suc').style.display='none';
+  document.getElementById('set-err').style.display='none';
+  document.getElementById('api-test-result').style.display='none';
+  openM('mod-set');
+}
+async function testApi(){
+  const url=document.getElementById('s-api').value.trim();
+  const res=document.getElementById('api-test-result');
+  res.style.display='block';res.textContent='A testar ligação...';res.style.color='var(--mt)';
+  if(!url){res.textContent='⚠️ Cole o URL primeiro.';res.style.color='var(--rd)';return;}
+  try{
+    const qs=new URLSearchParams({action:'ping'}).toString();
+    const r=await fetch(`${url}?${qs}`,{redirect:'follow'});
+    const data=await r.json();
+    if(data.success){res.textContent='✅ Ligação bem sucedida! Sheets online.';res.style.color='#15803D';}
+    else{res.textContent='⚠️ Resposta inesperada do servidor.';res.style.color='var(--rd)';}
+  }catch(e){res.textContent='❌ Erro de ligação. Verifique o URL e as permissões do Apps Script.';res.style.color='var(--rd)';}
+}
+function saveSett(){
+  CFG=loadCfg();
+  const np=document.getElementById('s-np').value,cp=document.getElementById('s-cp').value;
+  if(np&&np!==cp){alert('As senhas não coincidem.');return;}
+  CFG.apiUrl=document.getElementById('s-api').value.trim();
+  CFG.pt=document.getElementById('s-pt').value.trim();
+  CFG.mz=document.getElementById('s-mz').value.trim();
+  CFG.wa=document.getElementById('s-wa').value.trim();
+  CFG.addr=document.getElementById('s-ad').value.trim();
+  if(np)CFG.pass=np;
+  saveCfg(CFG);applyConfig();updateApiStatusBadge();
+  shA('set-suc','Guardado!');setTimeout(()=>closeM('mod-set'),1200);
+}
+function openWA(){CFG=loadCfg();window.open(`https://wa.me/${CFG.wa||'351929201880'}?text=Olá%20FLY%20WAY%20Logistics!%20Gostaria%20de%20mais%20informações.`,'_blank');}
+function openM(id){document.getElementById(id).classList.remove('hidden');}
+function closeM(id){document.getElementById(id).classList.add('hidden');}
+function hideA(){['ord-suc','ord-err'].forEach(id=>{const e=document.getElementById(id);if(e)e.style.display='none';});}
+function shA(id,msg){const e=document.getElementById(id);if(e){e.textContent=msg;e.style.display='block';}}
+document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.add('hidden');}));
+</script>
+</body>
+</html>
