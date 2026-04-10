@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FLY WAY Logistics</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--or:#F07800;--ord:#D96800;--orl:#FFF3E0;--bk:#0A0A0A;--wh:#fff;--gy:#F5F5F5;--bd:#E8E8E8;--mt:#888;--tx:#111;--gr:#16A34A;--rd:#DC2626}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--tx);background:var(--wh);overflow-x:hidden}
+.hidden{display:none!important}
+
+/* LOADING */
+#lo{position:fixed;inset:0;background:rgba(10,10,10,.92);z-index:9000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.spin{width:40px;height:40px;border:3px solid rgba(240,120,0,.2);border-top-color:var(--or);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#lo p{color:rgba(255,255,255,.5);font-size:14px;font-weight:500}
+
+/* NAV */
+#nav{position:fixed;top:0;width:100%;z-index:300;transition:background .4s;padding:0 5%}
+#nav.dark{background:rgba(10,10,10,.96);backdrop-filter:blur(16px);border-bottom:1px solid rgba(240,120,0,.2)}
+#nav.white{background:rgba(255,255,255,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--bd)}
+.ni{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer}
+.logo svg{width:40px;height:40px;transition:transform .3s;flex-shrink:0}
+.logo:hover svg{transform:rotate(-8deg) scale(1.06)}
+.lt{font-size:17px;font-weight:800;color:white;letter-spacing:-.5px}
+#nav.white .lt{color:var(--bk)}
+.ls{font-size:8px;font-weight:700;letter-spacing:3px;color:rgba(255,255,255,.3);text-transform:uppercase;display:block;margin-top:1px}
+#nav.white .ls{color:var(--mt)}
+.nls{display:flex;gap:28px}
+.nl{font-size:13px;font-weight:500;color:rgba(255,255,255,.6);text-decoration:none;transition:color .2s}
+.nl:hover,.nl:focus{color:var(--or)}
+#nav.white .nl{color:#555}
+.ncta{background:var(--or);color:white;padding:10px 20px;border-radius:6px;font-weight:700;font-size:13px;border:none;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.ncta:hover{background:var(--ord);transform:translateY(-1px)}
+.ham{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.ham span{width:22px;height:2px;background:white;border-radius:2px;display:block;transition:all .3s}
+#nav.white .ham span{background:var(--bk)}
+.mob{display:none;flex-direction:column;background:var(--bk);border-bottom:2px solid var(--or)}
+.mob a,.mob button{padding:14px 5%;font-size:15px;font-weight:600;color:white;text-decoration:none;border:none;background:none;text-align:left;cursor:pointer;border-top:1px solid rgba(255,255,255,.06);font-family:'Inter',sans-serif}
+.mob.open{display:flex}
+
+/* HERO */
+#hero{min-height:100vh;background:var(--bk);display:flex;align-items:center;padding:90px 5% 60px;position:relative;overflow:hidden}
+#hcv{position:absolute;inset:0;width:100%;height:100%;opacity:.55}
+.hcon{position:relative;z-index:2;max-width:620px}
+.heye{display:inline-flex;align-items:center;gap:10px;margin-bottom:24px}
+.hpls{width:7px;height:7px;background:var(--or);border-radius:50%;animation:pl 2s infinite;flex-shrink:0}
+@keyframes pl{0%,100%{box-shadow:0 0 0 0 rgba(240,120,0,.6)}70%{box-shadow:0 0 0 8px rgba(240,120,0,0)}}
+.heye span{font-size:11px;font-weight:600;color:rgba(255,255,255,.4);letter-spacing:2px;text-transform:uppercase}
+.htit{font-size:clamp(48px,7vw,86px);font-weight:800;color:white;line-height:1;letter-spacing:-3px;margin-bottom:20px}
+.htit em{color:var(--or);font-style:normal}
+.htit small{font-size:.6em;font-weight:300;color:rgba(255,255,255,.35);letter-spacing:-1px;display:block}
+.hsub{font-size:16px;color:rgba(255,255,255,.38);line-height:1.8;max-width:440px;margin-bottom:36px}
+.tbox{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:22px;backdrop-filter:blur(8px)}
+.tbox label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.3);display:block;margin-bottom:10px}
+.trow{display:flex;gap:8px}
+.tin{flex:1;padding:13px 15px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:8px;font-size:15px;font-family:'Inter',sans-serif;color:white;outline:none;transition:border-color .2s;min-width:0}
+.tin::placeholder{color:rgba(255,255,255,.2)}
+.tin:focus{border-color:var(--or)}
+.tbtn{background:var(--or);color:white;border:none;padding:13px 20px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;white-space:nowrap}
+.tbtn:hover{background:var(--ord)}
+.terr{color:#FCA5A5;font-size:13px;margin-top:10px;font-weight:500;display:none;line-height:1.5}
+.hsts{display:flex;gap:24px;margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,.07)}
+.hsn{font-size:28px;font-weight:800;color:white;letter-spacing:-1px;line-height:1}
+.hsl{font-size:11px;color:rgba(255,255,255,.28);font-weight:500;margin-top:3px}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(30px);transition:opacity .65s,transform .65s}
+.rv.on{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+/* SECTIONS */
+section{padding:80px 5%}
+.stag{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--or);margin-bottom:14px}
+.stag::before{content:'';width:18px;height:2px;background:var(--or);border-radius:1px}
+.stit{font-size:clamp(30px,4vw,50px);font-weight:800;color:var(--bk);letter-spacing:-2px;line-height:1.05;margin-bottom:12px}
+.ssub{font-size:15px;color:var(--mt);line-height:1.8;max-width:480px}
+
+/* SERVICES */
+#serv{background:var(--gy)}
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2px;margin-top:48px}
+.sc{background:white;padding:28px;transition:all .3s;position:relative;overflow:hidden;cursor:default}
+.sc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--or);transform:scaleX(0);transition:transform .3s;transform-origin:left}
+.sc:hover{transform:translateY(-4px);z-index:2;box-shadow:0 16px 50px rgba(0,0,0,.08)}
+.sc:hover::after{transform:scaleX(1)}
+.sn{font-size:11px;font-weight:700;color:var(--or);letter-spacing:2px;margin-bottom:16px;display:block}
+.si{font-size:34px;margin-bottom:14px;display:block;transition:transform .3s}
+.sc:hover .si{transform:scale(1.15) rotate(-5deg)}
+.sc h3{font-size:16px;font-weight:700;color:var(--bk);margin-bottom:8px}
+.sc p{font-size:14px;color:var(--mt);line-height:1.7}
+
+/* CINEMATIC SECTION */
+#reel{background:var(--bk);padding:0;overflow:hidden}
+.rtop{padding:64px 5% 36px}
+.rtop .stag{color:var(--or)}
+.rtop .stit{color:white}
+.rscene{position:relative;height:360px;overflow:hidden}
+#rcv{position:absolute;inset:0;width:100%;height:100%}
+.rovl{position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,10,10,.85) 0%,transparent 45%,transparent 55%,rgba(10,10,10,.85) 100%);z-index:2;pointer-events:none}
+.rbadge{position:absolute;top:28px;right:5%;z-index:3;background:var(--or);color:white;padding:9px 16px;border-radius:6px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;display:flex;align-items:center;gap:7px;animation:bp 3s infinite}
+@keyframes bp{0%,100%{box-shadow:0 0 0 0 rgba(240,120,0,.4)}50%{box-shadow:0 0 0 10px rgba(240,120,0,0)}}
+.rdot{width:6px;height:6px;background:white;border-radius:50%;animation:pl 1.5s infinite}
+.rstats{position:absolute;bottom:28px;left:5%;z-index:3;display:flex;gap:28px;flex-wrap:wrap}
+.rsn{font-size:34px;font-weight:800;color:white;letter-spacing:-1.5px;line-height:1}
+.rsn span{color:var(--or)}
+.rsl{font-size:10px;color:rgba(255,255,255,.35);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-top:3px}
+
+/* HOW */
+#como{background:white}
+.srows{margin-top:48px}
+.srow{display:flex;gap:28px;align-items:flex-start;padding:24px 0;border-bottom:1px solid var(--bd);transition:all .3s;position:relative;cursor:default}
+.srow:last-child{border-bottom:none}
+.srow:hover{padding-left:10px}
+.srow::before{content:'';position:absolute;left:0;top:0;bottom:0;width:0;background:var(--orl);transition:width .3s;z-index:0}
+.srow:hover::before{width:100%}
+.srow>*{position:relative;z-index:1}
+.sico{width:60px;height:60px;border-radius:50%;background:var(--gy);border:2px solid var(--bd);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;transition:all .3s}
+.srow:hover .sico{background:var(--or);border-color:var(--or);transform:scale(1.1)}
+.sbod{flex:1}
+.sbod h3{font-size:16px;font-weight:700;color:var(--bk);margin-bottom:5px;transition:color .3s}
+.srow:hover .sbod h3{color:var(--ord)}
+.sbod p{font-size:14px;color:var(--mt);line-height:1.7}
+.spill{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--mt);background:var(--gy);padding:5px 11px;border-radius:100px;flex-shrink:0;margin-top:3px;transition:all .3s}
+.srow:hover .spill{background:var(--or);color:white}
+
+/* CONTACT */
+#cont{background:var(--bk);padding-bottom:0}
+#cont .stag{color:var(--or)}
+#cont .stit{color:white}
+#cont .ssub{color:rgba(255,255,255,.32)}
+.ctgrid{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-top:48px}
+.cti{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);padding:26px;transition:all .3s;cursor:default}
+.cti:hover{background:rgba(240,120,0,.06);border-color:rgba(240,120,0,.3);transform:translateY(-3px)}
+.ctiv{font-size:26px;margin-bottom:12px;display:block;transition:transform .3s}
+.cti:hover .ctiv{transform:scale(1.15)}
+.cti strong{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.28);display:block;margin-bottom:5px}
+.cti span{font-size:16px;color:white;font-weight:600}
+.cti small{font-size:12px;color:rgba(255,255,255,.22);display:block;margin-top:3px}
+.wasec{padding:36px 5%;background:var(--bk);border-top:1px solid rgba(255,255,255,.05)}
+.wac{background:linear-gradient(135deg,#075E54,#128C7E);border-radius:12px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;cursor:pointer;transition:transform .3s;position:relative;overflow:hidden}
+.wac::before{content:'';position:absolute;right:-40px;top:-40px;width:180px;height:180px;background:rgba(255,255,255,.05);border-radius:50%}
+.wac:hover{transform:translateY(-3px);box-shadow:0 16px 50px rgba(18,140,126,.3)}
+.wacl h3{font-size:20px;font-weight:800;color:white;letter-spacing:-.5px;margin-bottom:5px}
+.wacl p{font-size:13px;color:rgba(255,255,255,.5)}
+.wacl .wnum{font-size:26px;font-weight:800;color:white;letter-spacing:-1px;margin-top:8px}
+.wabtn{background:white;color:#075E54;padding:12px 24px;border-radius:8px;font-weight:800;font-size:14px;border:none;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:8px;position:relative;z-index:1;transition:transform .2s;white-space:nowrap}
+.wabtn:hover{transform:scale(1.04)}
+footer{background:#050505;padding:28px 5%;border-top:1px solid rgba(255,255,255,.05)}
+.fti{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.ftc{font-size:13px;color:rgba(255,255,255,.2)}
+.fta{font-size:12px;color:rgba(255,255,255,.1);cursor:pointer;transition:color .2s;font-weight:500}
+.fta:hover{color:var(--or)}
+
+/* ═══ TRACKING PAGE ═══ */
+#vt{padding:90px 5% 60px;min-height:100vh;background:var(--gy)}
+.bbtn{display:inline-flex;align-items:center;gap:7px;color:var(--or);font-weight:700;font-size:13px;cursor:pointer;border:none;background:none;font-family:'Inter',sans-serif;margin-bottom:28px;padding:0;transition:opacity .2s;letter-spacing:.3px}
+.bbtn:hover{opacity:.7}
+
+/* Track result card */
+.trc{background:white;border-radius:14px;border:1px solid var(--bd);overflow:hidden;margin-bottom:18px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+.trctop{padding:24px;border-bottom:1px solid var(--bd);display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.trcidl{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mt);margin-bottom:4px}
+.trcid{font-size:26px;font-weight:800;color:var(--bk);letter-spacing:-1px}
+.trcdesc{font-size:13px;color:var(--mt);margin-top:4px}
+.tpill{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:7px;font-weight:700;font-size:13px}
+.pd{background:#DCFCE7;color:#15803D}.pt{background:var(--orl);color:var(--ord)}.pp{background:#FEF3C7;color:#92400E}.pf{background:#FEE2E2;color:#991B1B}
+
+/* Progress steps */
+.trcprog{padding:24px 24px 8px}
+.trcprogl{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mt);margin-bottom:18px}
+.psteps{display:flex;overflow-x:auto;padding-bottom:14px;gap:0}
+.psteps::-webkit-scrollbar{height:3px}
+.psteps::-webkit-scrollbar-thumb{background:var(--bd);border-radius:2px}
+.psw{flex:1;min-width:95px;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative}
+.psconn{position:absolute;top:38px;left:50%;right:-50%;height:4px;background:var(--bd);z-index:0}
+.psconn.done{background:var(--or)}
+.psnode{width:76px;height:76px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;margin-bottom:10px;transition:all .4s;border:3px solid var(--bd);background:white}
+.psnode.nd{background:var(--orl);border-color:var(--or)}
+.psnode.na{background:var(--or);border-color:var(--or);box-shadow:0 0 0 9px rgba(240,120,0,.14);animation:nap 2.5s infinite}
+@keyframes nap{0%,100%{box-shadow:0 0 0 9px rgba(240,120,0,.14)}50%{box-shadow:0 0 0 18px rgba(240,120,0,.04)}}
+.psnode.np{opacity:.38;background:var(--gy)}
+.psem{font-size:28px}
+.psnode.na .psem{filter:grayscale(1) brightness(10)}
+.pstk{position:absolute;bottom:-3px;right:-3px;width:20px;height:20px;background:var(--or);border-radius:50%;border:2px solid white;font-size:10px;color:white;display:flex;align-items:center;justify-content:center;font-weight:700}
+.psnm{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--tx);line-height:1.3;margin-bottom:2px}
+.psw.aw .psnm{color:var(--or)}
+.psdt{font-size:9px;color:var(--mt)}
+
+/* Truck animation */
+.trcanim{margin:0 24px 24px;background:linear-gradient(135deg,#FFF8F0,var(--orl));border-radius:10px;padding:22px 28px;display:flex;align-items:center;justify-content:center;min-height:120px;overflow:hidden;position:relative}
+.trd{position:absolute;bottom:16px;left:28px;right:28px}
+.trdbg{height:4px;background:rgba(240,120,0,.14);border-radius:2px}
+.trdsh{height:4px;margin-top:-4px;overflow:hidden;border-radius:2px}
+.trdsh::after{content:'';display:block;height:100%;background:repeating-linear-gradient(90deg,transparent 0,transparent 16px,rgba(240,120,0,.34) 16px,rgba(240,120,0,.34) 32px);animation:rd 1.1s linear infinite}
+@keyframes rd{to{transform:translateX(32px)}}
+.trll{position:absolute;bottom:3px;left:28px;font-size:9px;font-weight:700;color:var(--or);letter-spacing:1px;text-transform:uppercase}
+.trlr{position:absolute;bottom:3px;right:28px;font-size:9px;font-weight:700;color:var(--or);letter-spacing:1px;text-transform:uppercase}
+.truck{position:absolute;bottom:28px;z-index:2;transition:left 1s cubic-bezier(.4,0,.2,1);animation:trk .8s ease-in-out infinite alternate}
+@keyframes trk{from{transform:translateY(0)}to{transform:translateY(-3px)}}
+.delivered-scene{display:flex;align-items:center;gap:20px;animation:ds .6s ease}
+@keyframes ds{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+.dico{font-size:58px;filter:drop-shadow(0 4px 14px rgba(240,120,0,.3))}
+.dtxt strong{font-size:24px;font-weight:800;color:var(--ord);letter-spacing:-1px;display:block}
+.dtxt span{font-size:13px;color:var(--mt)}
+
+/* Meta grid */
+.trcmeta{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;padding:18px 24px;border-top:1px solid var(--bd)}
+.trcmb{background:var(--gy);border-radius:9px;padding:12px 14px}
+.trcmb strong{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--mt);display:block;margin-bottom:5px}
+.trcmb span{font-size:14px;font-weight:700;color:var(--bk)}
+
+/* Timeline */
+.tlcard{background:white;border-radius:14px;border:1px solid var(--bd);overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+.tlhd{padding:18px 22px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:9px}
+.tlhd h3{font-size:13px;font-weight:700;color:var(--bk);text-transform:uppercase;letter-spacing:.5px}
+.tlbody{padding:22px}
+.tlrow{display:flex;gap:12px;padding-bottom:22px}
+.tlrow:last-child{padding-bottom:0}
+.tlcol{display:flex;flex-direction:column;align-items:center;width:42px;flex-shrink:0}
+.tldot{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.tla{background:var(--or);box-shadow:0 0 0 5px rgba(240,120,0,.14)}
+.tld2{background:var(--orl);border:2px solid var(--or)}
+.tlline{flex:1;width:2px;background:var(--bd);margin-top:4px}
+.tlline.d{background:var(--or)}
+.tlinf{flex:1;padding-top:8px}
+.tlinf strong{font-size:14px;font-weight:700;color:var(--bk);display:block}
+.tlinf .lloc{font-size:13px;color:var(--mt);margin-top:3px}
+.tlinf .ldt{font-size:12px;color:var(--mt);margin-top:2px;font-weight:500}
+.tlinf .lnote{background:var(--orl);border-left:3px solid var(--or);padding:7px 11px;border-radius:0 5px 5px 0;font-size:13px;color:var(--mt);margin-top:8px}
+
+/* ═══ ADMIN ═══ */
+#val{min-height:100vh;background:var(--bk);display:flex;align-items:center;justify-content:center;padding:20px}
+.lgcard{background:white;border-radius:14px;padding:40px;width:100%;max-width:380px;border-top:4px solid var(--or)}
+.lgcard h2{font-size:24px;font-weight:800;color:var(--bk);letter-spacing:-1px;text-align:center;margin-bottom:4px}
+.lgcard p{font-size:14px;color:var(--mt);text-align:center;margin-bottom:24px}
+.fl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--tx);display:block;margin-bottom:7px}
+.fi{width:100%;padding:12px 15px;border:2px solid var(--bd);border-radius:8px;font-size:15px;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s;color:var(--tx);background:white}
+.fi:focus{border-color:var(--or)}
+.fi:disabled{background:var(--gy);color:var(--mt)}
+.fsel{width:100%;padding:12px 15px;border:2px solid var(--bd);border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;outline:none;appearance:none;background:white url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'><path d='M5.5 7L0 0h11z' fill='%23888'/></svg>") no-repeat right 13px center;cursor:pointer;color:var(--tx)}
+.fsel:focus{border-color:var(--or)}
+.fta{width:100%;padding:12px 15px;border:2px solid var(--bd);border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;outline:none;resize:vertical;min-height:76px;color:var(--tx)}
+.fta:focus{border-color:var(--or)}
+.fg{margin-bottom:16px}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fbtn{width:100%;padding:13px;background:var(--or);color:white;border:none;border-radius:8px;font-weight:700;font-size:15px;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.fbtn:hover{background:var(--ord);transform:translateY(-1px)}
+.ebox{background:#FEE2E2;color:#991B1B;padding:10px 13px;border-radius:6px;font-size:13px;margin-bottom:12px;display:none;font-weight:600}
+.sbox{background:#DCFCE7;color:#15803D;padding:10px 13px;border-radius:6px;font-size:13px;margin-bottom:12px;display:none;font-weight:600}
+.blnk{text-align:center;margin-top:16px;font-size:13px;color:var(--mt);cursor:pointer;transition:color .2s}
+.blnk:hover{color:var(--or)}
+
+/* Admin panel */
+#vad{min-height:100vh;background:var(--gy)}
+.admbar{background:var(--bk);padding:0 5%;display:flex;align-items:center;justify-content:space-between;height:56px;border-bottom:2px solid var(--or)}
+.admacts{display:flex;gap:8px}
+.ab{padding:7px 14px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;border:none;transition:all .2s}
+.aor{background:var(--or);color:white}.aor:hover{background:var(--ord)}
+.agh{background:rgba(255,255,255,.1);color:rgba(255,255,255,.65)}.agh:hover{color:white}
+.ard{background:#FEE2E2;color:#991B1B}.ard:hover{background:#FECACA}
+.abl{background:#DBEAFE;color:#1D4ED8}
+.adb{padding:22px 5%}
+.atabs{display:flex;gap:3px;background:white;border:1px solid var(--bd);border-radius:8px;padding:3px;width:fit-content;margin-bottom:20px}
+.at{padding:7px 16px;border-radius:5px;font-size:12px;font-weight:700;cursor:pointer;border:none;background:transparent;color:var(--mt);font-family:'Inter',sans-serif;transition:all .2s}
+.at.active{background:var(--or);color:white}
+.tblcard{background:white;border:1px solid var(--bd);border-radius:12px;overflow:hidden}
+.tblhd{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--bd);flex-wrap:wrap;gap:10px}
+.tblhd h3{font-size:14px;font-weight:700;color:var(--bk)}
+.tblhdr{display:flex;gap:8px;align-items:center}
+.src{padding:8px 12px;border:1px solid var(--bd);border-radius:6px;font-size:13px;font-family:'Inter',sans-serif;outline:none;width:170px;transition:border-color .2s}
+.src:focus{border-color:var(--or)}
+.rfb{padding:8px 12px;border:1px solid var(--bd);border-radius:6px;font-size:12px;font-family:'Inter',sans-serif;background:var(--gy);cursor:pointer;transition:all .2s;color:var(--tx)}
+.rfb:hover{border-color:var(--or);color:var(--or)}
+table{width:100%;border-collapse:collapse}
+th{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--mt);padding:10px 15px;text-align:left;background:var(--gy);border-bottom:1px solid var(--bd)}
+td{padding:12px 15px;font-size:13px;color:var(--tx);border-bottom:1px solid var(--bd)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#FAFAFA}
+.bdg{padding:3px 9px;border-radius:100px;font-size:11px;font-weight:700}
+.bde{background:#DCFCE7;color:#15803D}.btr{background:var(--orl);color:var(--ord)}.bpe{background:#FEF3C7;color:#92400E}.bcu{background:#EDE9FE;color:#6D28D9}.bdi{background:#E0F2FE;color:#0369A1}.bfa{background:#FEE2E2;color:#991B1B}.bre{background:var(--gy);color:var(--mt)}
+.acts{display:flex;gap:5px;flex-wrap:wrap}
+.emp{padding:52px 20px;text-align:center;color:var(--mt)}
+.emp .ei{font-size:44px;display:block;margin-bottom:12px}
+/* API badge */
+.apibadge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:100px}
+.aok{background:#DCFCE7;color:#15803D}.anone{background:var(--gy);color:var(--mt)}
+/* MODAL */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:500;display:flex;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(4px)}
+.mo{background:white;border-radius:14px;padding:28px;width:100%;max-width:540px;max-height:90vh;overflow-y:auto;border-top:4px solid var(--or);box-shadow:0 20px 70px rgba(0,0,0,.3)}
+.mhd{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.mhd h3{font-size:20px;font-weight:800;color:var(--bk);letter-spacing:-1px}
+.mx{background:var(--gy);border:none;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;color:var(--mt);transition:background .2s}
+.mx:hover{background:var(--bd)}
+.mft{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;padding-top:16px;border-top:1px solid var(--bd)}
+.mcan{padding:10px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:2px solid var(--bd);background:white;color:var(--mt);font-family:'Inter',sans-serif}
+.mok{padding:10px 24px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;border:none;background:var(--or);color:white;font-family:'Inter',sans-serif;transition:all .2s}
+.mok:hover{background:var(--ord)}
+.hll{border:1px solid var(--bd);border-radius:8px;overflow:hidden;max-height:130px;overflow-y:auto;margin-top:7px}
+.hlr{padding:9px 13px;font-size:13px;border-bottom:1px solid var(--bd);display:flex;gap:7px;align-items:center}
+.hlr:last-child{border-bottom:none}
+.hls{font-weight:600;color:var(--bk);flex:1}.hld{color:var(--mt);font-size:11px;white-space:nowrap}
+.stg{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:14px}
+.stcard{background:white;border-radius:10px;padding:22px;text-align:center;border:1px solid var(--bd)}
+.stbig{font-size:44px;font-weight:800;line-height:1;letter-spacing:-2px}
+.stlbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--mt);margin-top:5px}
+.cor{color:var(--or)}.cgr{color:var(--gr)}.cbl{color:#1D4ED8}.cam{color:#D97706}
+/* Setup guide */
+.guide{background:var(--bk);border-radius:12px;padding:24px;border:1px solid rgba(240,120,0,.18)}
+.guide h3{font-size:17px;font-weight:800;color:white;margin-bottom:18px;display:flex;align-items:center;gap:9px}
+.gstep{display:flex;gap:12px;margin-bottom:14px;align-items:flex-start}
+.gnum{width:26px;height:26px;background:var(--or);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:white;flex-shrink:0;margin-top:2px}
+.gtext strong{font-size:13px;font-weight:700;color:white;display:block;margin-bottom:2px}
+.gtext span{font-size:12px;color:rgba(255,255,255,.42);line-height:1.6}
+.gtext code{background:rgba(240,120,0,.14);color:var(--or);padding:1px 6px;border-radius:3px;font-family:monospace;font-size:12px}
+.glink{display:inline-flex;align-items:center;gap:5px;background:rgba(240,120,0,.14);color:var(--or);padding:6px 12px;border-radius:5px;font-size:11px;font-weight:700;text-decoration:none;margin-top:7px;transition:background .2s}
+.glink:hover{background:rgba(240,120,0,.24)}
+
+@media(max-width:860px){.ctgrid{grid-template-columns:1fr}.f2{grid-template-columns:1fr}}
+@media(max-width:680px){.nls,.ncta{display:none}.ham{display:flex}.trow{flex-direction:column}.tbtn{width:100%}.hsts{gap:14px}.fti{flex-direction:column;text-align:center}.tblhd{flex-direction:column}.ctgrid{grid-template-columns:1fr 1fr}}
+@media(max-width:400px){.ctgrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div id="lo" class="hidden">
+  <div class="spin"></div>
+  <p id="lo-msg">A carregar...</p>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="ni">
+    <div class="logo" onclick="goHome()">
+      <!-- FLY WAY LOGO SVG — pássaro laranja em círculo preto/laranja -->
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="50" fill="#F07800"/>
+        <circle cx="50" cy="50" r="40" fill="#0A0A0A"/>
+        <!-- Pássaro / asa -->
+        <path d="M62 32 C58 30 50 31 44 37 C40 41 37 47 37 47 C37 47 31 44 24 45 C20 46 17 49 16 52 C20 51 25 53 28 56 C24 59 21 65 21 70 C26 67 32 63 37 62 C37 66 39 71 42 75 C45 70 46 64 45 59 C51 56 57 52 61 48 C59 53 59 59 59 63 C63 58 66 51 67 44 C68 40 67 35 62 32Z" fill="#F07800"/>
+        <!-- Wing detail lines -->
+        <path d="M50 46 C54 43 60 42 64 43 C61 46 57 50 54 54 C52 51 50 48 50 46Z" fill="rgba(10,10,10,0.5)"/>
+        <path d="M42 54 C44 52 46 50 48 50 C47 53 46 56 44 58 C43 57 42 55 42 54Z" fill="rgba(10,10,10,0.4)"/>
+      </svg>
+      <div>
+        <div class="lt">FLY WAY</div>
+        <span class="ls">Logistics</span>
+      </div>
+    </div>
+    <div class="nls">
+      <a href="#hero" class="nl">Início</a>
+      <a href="#serv" class="nl">Serviços</a>
+      <a href="#reel" class="nl">Sobre nós</a>
+      <a href="#como" class="nl">Como funciona</a>
+      <a href="#cont" class="nl">Contacto</a>
+    </div>
+    <button class="ncta" onclick="scrollTrack()">Rastrear encomenda</button>
+    <button class="ham" onclick="toggleMob()"><span></span><span></span><span></span></button>
+  </div>
+  <div class="mob" id="mob">
+    <a href="#hero" onclick="closeMob()">Início</a>
+    <a href="#serv" onclick="closeMob()">Serviços</a>
+    <a href="#reel" onclick="closeMob()">Sobre nós</a>
+    <a href="#como" onclick="closeMob()">Como funciona</a>
+    <a href="#cont" onclick="closeMob()">Contacto</a>
+    <button onclick="scrollTrack();closeMob()">Rastrear encomenda</button>
+  </div>
+</nav>
+
+<!-- ═══════════ MAIN SITE ═══════════ -->
+<div id="vm">
+
+<section id="hero">
+  <canvas id="hcv"></canvas>
+  <div class="hcon">
+    <div class="heye rv"><span class="hpls"></span><span>Serviço activo · Portugal &amp; Moçambique</span></div>
+    <h1 class="htit rv d1">Entregamos<br><em>com confiança</em><small>Porto → Maputo</small></h1>
+    <p class="hsub rv d2">Envio de encomendas de Portugal para todo Moçambique. Roupas, electrodomésticos e muito mais — com rastreio em tempo real.</p>
+    <div class="tbox rv d3">
+      <label>Rastrear a minha encomenda</label>
+      <div class="trow">
+        <input class="tin" id="t-inp" type="text" placeholder="Número de rastreio · Ex: FW-001234" onkeydown="if(event.key==='Enter')doTrack()">
+        <button class="tbtn" onclick="doTrack()">Rastrear →</button>
+      </div>
+      <div class="terr" id="t-err"></div>
+    </div>
+    <div class="hsts rv d4">
+      <div><div class="hsn" data-c="500">0</div><div class="hsl">Encomendas entregues</div></div>
+      <div><div class="hsn" data-c="10">0</div><div class="hsl">Cidades cobertas</div></div>
+      <div><div class="hsn" data-c="99">0</div><div class="hsl">% Satisfação</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="serv">
+  <div class="stag rv">O que fazemos</div>
+  <h2 class="stit rv d1">Os nossos serviços</h2>
+  <p class="ssub rv d2">Soluções completas de transporte e logística entre Portugal e Moçambique.</p>
+  <div class="sg">
+    <div class="sc rv d1"><span class="sn">01</span><span class="si">✈️</span><h3>Envios de Portugal</h3><p>Recebemos no Porto e entregamos em todo Moçambique com segurança total.</p></div>
+    <div class="sc rv d2"><span class="sn">02</span><span class="si">👗</span><h3>Roupas &amp; Calçado</h3><p>Especialistas em vestuário, calçado, acessórios e perfumes.</p></div>
+    <div class="sc rv d3"><span class="sn">03</span><span class="si">📱</span><h3>Electrodomésticos</h3><p>Equipamentos embalados com máximo cuidado e seguro incluído.</p></div>
+    <div class="sc rv d4"><span class="sn">04</span><span class="si">🚛</span><h3>Distribuição Nacional</h3><p>Cobrimos todas as províncias de Moçambique.</p></div>
+    <div class="sc rv d1"><span class="sn">05</span><span class="si">🛡️</span><h3>Entrega Garantida</h3><p>Acompanhamos cada encomenda do início ao fim com responsabilidade total.</p></div>
+    <div class="sc rv d2"><span class="sn">06</span><span class="si">📍</span><h3>Rastreio em Tempo Real</h3><p>Acompanhe cada etapa em qualquer momento, 24h por dia.</p></div>
+  </div>
+</section>
+
+<section id="reel" style="padding:0">
+  <div class="rtop">
+    <div class="stag rv">A nossa operação</div>
+    <h2 class="stit rv d1">De Portugal<br>para o mundo</h2>
+  </div>
+  <div class="rscene">
+    <canvas id="rcv"></canvas>
+    <div class="rovl"></div>
+    <div class="rbadge"><span class="rdot"></span>OPERAÇÃO EM CURSO</div>
+    <div class="rstats">
+      <div><div class="rsn"><span data-c2="500">0</span>+</div><div class="rsl">Encomendas</div></div>
+      <div><div class="rsn"><span data-c2="3">0</span></div><div class="rsl">Anos activos</div></div>
+      <div><div class="rsn"><span data-c2="10">0</span>+</div><div class="rsl">Cidades</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="como" style="background:white">
+  <div class="stag rv">Processo</div>
+  <h2 class="stit rv d1">Como funciona</h2>
+  <p class="ssub rv d2">Do registo à entrega — cada passo acompanhado pela nossa equipa.</p>
+  <div class="srows">
+    <div class="srow rv"><div class="sico">📦</div><div class="sbod"><h3>Registo da encomenda</h3><p>A encomenda é registada e recebe um código único de rastreio para partilhar com o destinatário.</p></div><span class="spill">Passo 1</span></div>
+    <div class="srow rv d1"><div class="sico">✅</div><div class="sbod"><h3>Recolha em Portugal</h3><p>A nossa equipa no Porto recolhe e confirma o estado do produto antes de embarcar.</p></div><span class="spill">Passo 2</span></div>
+    <div class="srow rv d2"><div class="sico">🚛</div><div class="sbod"><h3>Em trânsito</h3><p>A encomenda viaja de Portugal para Moçambique com notificações WhatsApp em cada etapa.</p></div><span class="spill">Passo 3</span></div>
+    <div class="srow rv d3"><div class="sico">🛃</div><div class="sbod"><h3>Despacho alfandegário</h3><p>Processamos o despacho aduaneiro para agilizar a entrada em Moçambique.</p></div><span class="spill">Passo 4</span></div>
+    <div class="srow rv d4"><div class="sico">🏍️</div><div class="sbod"><h3>Distribuição local</h3><p>Entregue à rede local para o endereço final em qualquer província.</p></div><span class="spill">Passo 5</span></div>
+    <div class="srow rv"><div class="sico">🎉</div><div class="sbod"><h3>Entregue!</h3><p>O destinatário recebe e o remetente em Portugal recebe confirmação automática via WhatsApp.</p></div><span class="spill">Passo 6</span></div>
+  </div>
+</section>
+
+<section id="cont" style="padding-bottom:0">
+  <div class="stag rv">Contacto</div>
+  <h2 class="stit rv d1">Fale connosco</h2>
+  <p class="ssub rv d2">A nossa equipa está disponível para ajudar.</p>
+  <div class="ctgrid rv d2">
+    <div class="cti"><span class="ctiv">📞</span><strong>Portugal — Principal 🇵🇹</strong><span id="d-pt">+351 929 201 880</span><small>Porto · Seg–Sáb · 8h–20h</small></div>
+    <div class="cti"><span class="ctiv">📱</span><strong>Moçambique 🇲🇿</strong><span id="d-mz">+258 87 342 9076</span><small>Maputo · Seg–Sáb · 7h–19h</small></div>
+    <div class="cti"><span class="ctiv">✈️</span><strong>Rota principal</strong><span>Porto → Maputo</span><small>Envios regulares · Consulte datas</small></div>
+    <div class="cti"><span class="ctiv">📦</span><strong>O que aceitamos</strong><span>Roupas, Calçado, Electro</span><small>Perfumes, acessórios e mais</small></div>
+  </div>
+</section>
+<div class="wasec rv">
+  <div class="wac" onclick="openWA()">
+    <div class="wacl">
+      <h3>Fale connosco no WhatsApp</h3>
+      <p>Resposta rápida · Orçamentos · Informações sobre envios</p>
+      <div class="wnum">🇵🇹 +351 929 201 880</div>
+    </div>
+    <button class="wabtn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="#075E54"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a8.6 8.6 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.918.5C5.584.5.5 5.584.5 11.918c0 2.151.578 4.166 1.583 5.902L.5 23.5l5.82-1.552c1.669.912 3.58 1.436 5.598 1.436 6.334 0 11.418-5.084 11.418-11.418S18.252.5 11.918.5zm0 20.836c-1.834 0-3.553-.49-5.038-1.347l-.361-.214-3.754 1.001 1.014-3.664-.233-.375C2.485 15.371 2 13.71 2 11.918 2 6.415 6.415 2 11.918 2s9.918 4.415 9.918 9.918-4.415 9.418-9.918 9.418z"/></svg>
+      Enviar mensagem
+    </button>
+  </div>
+</div>
+<footer>
+  <div class="fti">
+    <div style="display:flex;align-items:center;gap:10px">
+      <svg width="28" height="28" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="#F07800"/><circle cx="50" cy="50" r="40" fill="#0A0A0A"/><path d="M62 32C58 30 50 31 44 37 40 41 37 47 37 47 37 47 31 44 24 45 20 46 17 49 16 52 20 51 25 53 28 56 24 59 21 65 21 70 26 67 32 63 37 62 37 66 39 71 42 75 45 70 46 64 45 59 51 56 57 52 61 48 59 53 59 59 59 63 63 58 66 51 67 44 68 40 67 35 62 32Z" fill="#F07800"/></svg>
+      <span class="ftc"><strong style="color:rgba(255,255,255,.45)">FLY WAY Logistics</strong> &copy; 2025</span>
+    </div>
+    <span class="fta" onclick="showAdmin()">⚙ Área Admin</span>
+  </div>
+</footer>
+</div><!-- /vm -->
+
+<!-- ═══════════ TRACKING ═══════════ -->
+<div id="vt" class="hidden" style="padding:88px 5% 56px;min-height:100vh;background:var(--gy)">
+  <button class="bbtn" onclick="goHome()">← Voltar ao início</button>
+  <div id="trcontent"></div>
+</div>
+
+<!-- ═══════════ ADMIN LOGIN ═══════════ -->
+<div id="val" class="hidden">
+  <div class="lgcard">
+    <div style="text-align:center;margin-bottom:24px">
+      <svg width="60" height="60" viewBox="0 0 100 100" style="display:inline-block"><circle cx="50" cy="50" r="50" fill="#F07800"/><circle cx="50" cy="50" r="40" fill="#0A0A0A"/><path d="M62 32C58 30 50 31 44 37 40 41 37 47 37 47 37 47 31 44 24 45 20 46 17 49 16 52 20 51 25 53 28 56 24 59 21 65 21 70 26 67 32 63 37 62 37 66 39 71 42 75 45 70 46 64 45 59 51 56 57 52 61 48 59 53 59 59 59 63 63 58 66 51 67 44 68 40 67 35 62 32Z" fill="#F07800"/></svg>
+    </div>
+    <h2>Área Admin</h2>
+    <p>Gestão de encomendas FLY WAY</p>
+    <div class="ebox" id="lg-err">Senha incorrecta.</div>
+    <div class="fg"><label class="fl">Senha de acesso</label><input class="fi" type="password" id="adm-pw" placeholder="Insira a senha" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <button class="fbtn" onclick="doLogin()">Entrar</button>
+    <div class="blnk" onclick="goHome()">← Voltar ao site</div>
+  </div>
+</div>
+
+<!-- ═══════════ ADMIN PANEL ═══════════ -->
+<div id="vad" class="hidden">
+  <div class="admbar">
+    <div style="display:flex;align-items:center;gap:10px">
+      <svg width="30" height="30" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="#F07800"/><circle cx="50" cy="50" r="40" fill="#0A0A0A"/><path d="M62 32C58 30 50 31 44 37 40 41 37 47 37 47 37 47 31 44 24 45 20 46 17 49 16 52 20 51 25 53 28 56 24 59 21 65 21 70 26 67 32 63 37 62 37 66 39 71 42 75 45 70 46 64 45 59 51 56 57 52 61 48 59 53 59 59 59 63 63 58 66 51 67 44 68 40 67 35 62 32Z" fill="#F07800"/></svg>
+      <span style="font-size:16px;font-weight:800;color:white">FLY WAY <span style="color:var(--or)">Admin</span></span>
+      <span id="apibadge" class="apibadge anone" style="margin-left:6px">● Sheets: não configurado</span>
+    </div>
+    <div class="admacts">
+      <button class="ab aor" onclick="openNewOrd()">+ Nova</button>
+      <button class="ab agh" onclick="openSett()">⚙ Definições</button>
+      <button class="ab agh" onclick="goHome()">Sair</button>
+    </div>
+  </div>
+  <div class="adb">
+    <div class="atabs">
+      <button class="at active" onclick="switchTab('o')">Encomendas</button>
+      <button class="at" onclick="switchTab('s')">Estatísticas</button>
+      <button class="at" onclick="switchTab('g')">Guia Sheets</button>
+    </div>
+    <div id="tab-o">
+      <div class="tblcard">
+        <div class="tblhd">
+          <h3>Encomendas <span id="oc" style="font-size:12px;font-weight:500;color:var(--mt)"></span></h3>
+          <div class="tblhdr">
+            <input class="src" type="text" id="srch" placeholder="Pesquisar..." oninput="filterOrds()">
+            <button class="rfb" onclick="renderOrds()">🔄 Actualizar</button>
+          </div>
+        </div>
+        <div id="ob" style="overflow-x:auto"></div>
+      </div>
+    </div>
+    <div id="tab-s" class="hidden"><div class="stg" id="stb"></div></div>
+    <div id="tab-g" class="hidden">
+      <div class="guide">
+        <h3>📊 Ligar ao Google Sheets — Passo a Passo</h3>
+        <div class="gstep"><div class="gnum">1</div><div class="gtext"><strong>Criar o Google Sheets</strong><span>Vá ao Google Sheets e crie uma folha nova.</span><br><a class="glink" href="https://sheets.new" target="_blank">↗ Abrir Google Sheets</a></div></div>
+        <div class="gstep"><div class="gnum">2</div><div class="gtext"><strong>Abrir o Apps Script</strong><span>No Sheets: <code>Extensões</code> → <code>Apps Script</code>. Apague todo o código existente.</span></div></div>
+        <div class="gstep"><div class="gnum">3</div><div class="gtext"><strong>Copiar o código</strong><span>O código do Apps Script está no final desta página — role para baixo ou procure por "APPS SCRIPT CODE". Copie tudo entre os comentários e cole no editor.</span></div></div>
+        <div class="gstep"><div class="gnum">4</div><div class="gtext"><strong>Executar "testar"</strong><span>Seleccione a função <code>testar</code> e clique ▶ Executar. Autorize quando pedido.</span></div></div>
+        <div class="gstep"><div class="gnum">5</div><div class="gtext"><strong>Publicar como Aplicação Web</strong><span><code>Implementar</code> → <code>Nova implementação</code> → Tipo: Aplicação Web → Executar como: Eu → Acesso: <code>Qualquer pessoa</code> → Implementar → <strong>Copie o URL</strong>.</span></div></div>
+        <div class="gstep"><div class="gnum">6</div><div class="gtext"><strong>Colar URL nas Definições</strong><span>Aqui no Admin → <code>⚙ Definições</code> → campo verde → cole o URL → clique Testar → se ficar verde está pronto!</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Order -->
+<div class="ov hidden" id="mod-ord">
+  <div class="mo">
+    <div class="mhd"><h3 id="mod-ttl">Nova Encomenda</h3><button class="mx" onclick="closeM('mod-ord')">✕</button></div>
+    <div class="sbox" id="ord-ok">Guardado no Google Sheets! ✅</div>
+    <div class="ebox" id="ord-err">Erro ao guardar.</div>
+    <input type="hidden" id="eid">
+    <div class="f2">
+      <div class="fg"><label class="fl">Código Rastreio *</label><input class="fi" type="text" id="fi-id" placeholder="FW-001234"></div>
+      <div class="fg"><label class="fl">Nome Cliente *</label><input class="fi" type="text" id="fi-nm" placeholder="Nome completo"></div>
+    </div>
+    <div class="f2">
+      <div class="fg"><label class="fl">Telefone</label><input class="fi" type="text" id="fi-ph" placeholder="+258 ..."></div>
+      <div class="fg"><label class="fl">Descrição</label><input class="fi" type="text" id="fi-ds" placeholder="Ex: Roupas"></div>
+    </div>
+    <div class="f2">
+      <div class="fg"><label class="fl">Origem *</label><input class="fi" type="text" id="fi-or" placeholder="Ex: Porto"></div>
+      <div class="fg"><label class="fl">Destino *</label><input class="fi" type="text" id="fi-de" placeholder="Ex: Maputo"></div>
+    </div>
+    <div class="fg"><label class="fl">Status inicial</label>
+      <select class="fsel" id="fi-st">
+        <option value="Encomenda Registada">📦 Encomenda Registada</option>
+        <option value="Recolhida">✅ Recolhida</option>
+        <option value="Em Trânsito">🚛 Em Trânsito</option>
+        <option value="Na Alfândega">🛃 Na Alfândega</option>
+        <option value="Em Distribuição">🏍️ Em Distribuição</option>
+        <option value="Entregue">🎉 Entregue</option>
+        <option value="Tentativa Falhada">⚠️ Tentativa Falhada</option>
+      </select>
+    </div>
+    <div class="fg"><label class="fl">Observações</label><textarea class="fta" id="fi-no" placeholder="Detalhes adicionais..."></textarea></div>
+    <div class="mft"><button class="mcan" onclick="closeM('mod-ord')">Cancelar</button><button class="mok" onclick="saveOrd()">Guardar</button></div>
+  </div>
+</div>
+
+<!-- MODAL: Update -->
+<div class="ov hidden" id="mod-upd">
+  <div class="mo">
+    <div class="mhd"><h3 id="updttl">Atualizar Status</h3><button class="mx" onclick="closeUpdM()">✕</button></div>
+    <div id="upd-form">
+      <input type="hidden" id="uid">
+      <div class="fg"><label class="fl">Encomenda</label><input class="fi" type="text" id="u-ref" disabled></div>
+      <div class="f2">
+        <div class="fg"><label class="fl">Novo Status</label>
+          <select class="fsel" id="u-st">
+            <option value="Encomenda Registada">📦 Encomenda Registada</option>
+            <option value="Recolhida">✅ Recolhida</option>
+            <option value="Em Trânsito">🚛 Em Trânsito</option>
+            <option value="Na Alfândega">🛃 Na Alfândega</option>
+            <option value="Em Distribuição">🏍️ Em Distribuição</option>
+            <option value="Entregue">🎉 Entregue</option>
+            <option value="Tentativa Falhada">⚠️ Tentativa Falhada</option>
+          </select>
+        </div>
+        <div class="fg"><label class="fl">Localização actual</label><input class="fi" type="text" id="u-loc" placeholder="Ex: Beira"></div>
+      </div>
+      <div class="fg"><label class="fl">Observações</label><textarea class="fta" id="u-no" placeholder="Detalhes..."></textarea></div>
+      <div class="fg"><label class="fl">Histórico</label><div class="hll" id="u-hist"></div></div>
+      <div class="mft"><button class="mcan" onclick="closeUpdM()">Cancelar</button><button class="mok" onclick="saveUpd()">Atualizar</button></div>
+    </div>
+    <div id="upd-wa" class="hidden">
+      <div style="text-align:center;padding:6px 0 18px">
+        <div style="width:52px;height:52px;background:#DCFCE7;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 10px">✅</div>
+        <div style="font-size:17px;font-weight:800;color:var(--bk)">Status actualizado no Sheets!</div>
+        <div style="font-size:13px;color:var(--mt);margin-top:3px">Quer notificar o cliente via WhatsApp?</div>
+      </div>
+      <div style="background:#E7FFDB;border-radius:10px;padding:16px;margin-bottom:14px;border:1px solid #C3F0A0">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#3D7A1E;margin-bottom:8px">Pré-visualização da mensagem</div>
+        <div id="wa-prev" style="font-size:13px;color:var(--tx);line-height:1.65;white-space:pre-wrap"></div>
+      </div>
+      <div id="wa-ci" style="background:var(--gy);border-radius:8px;padding:11px 13px;margin-bottom:14px;font-size:13px;display:flex;align-items:center;gap:9px">
+        <span style="font-size:17px">📱</span>
+        <div><div style="font-weight:700;color:var(--bk)" id="wa-cn"></div><div style="color:var(--mt);font-size:12px" id="wa-cp"></div></div>
+      </div>
+      <div class="fg"><label class="fl">Editar mensagem (opcional)</label><textarea class="fta" id="wa-edit" style="min-height:110px;font-size:13px;line-height:1.65" oninput="document.getElementById('wa-prev').textContent=this.value"></textarea></div>
+      <div class="mft" style="flex-direction:column;gap:9px">
+        <button id="wa-sbtn" onclick="sendWA()" style="width:100%;padding:13px;background:#25D366;color:white;border:none;border-radius:8px;font-weight:700;font-size:14px;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;gap:9px;transition:background .2s">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a8.6 8.6 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.918.5C5.584.5.5 5.584.5 11.918c0 2.151.578 4.166 1.583 5.902L.5 23.5l5.82-1.552c1.669.912 3.58 1.436 5.598 1.436 6.334 0 11.418-5.084 11.418-11.418S18.252.5 11.918.5zm0 20.836c-1.834 0-3.553-.49-5.038-1.347l-.361-.214-3.754 1.001 1.014-3.664-.233-.375C2.485 15.371 2 13.71 2 11.918 2 6.415 6.415 2 11.918 2s9.918 4.415 9.918 9.918-4.415 9.418-9.918 9.418z"/></svg>
+          Enviar WhatsApp ao cliente
+        </button>
+        <button onclick="closeUpdM()" style="width:100%;padding:10px;border:2px solid var(--bd);background:white;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;color:var(--mt);font-family:'Inter',sans-serif">Fechar sem enviar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Settings -->
+<div class="ov hidden" id="mod-set">
+  <div class="mo">
+    <div class="mhd"><h3>Definições</h3><button class="mx" onclick="closeM('mod-set')">✕</button></div>
+    <div class="sbox" id="set-ok">Guardado!</div>
+    <div class="ebox" id="set-err"></div>
+    <div style="background:linear-gradient(135deg,#E7FFDB,#F0FFF4);border-radius:10px;padding:14px;margin-bottom:18px;border:1px solid #C3F0A0">
+      <label class="fl" style="color:#15803D">URL do Google Apps Script</label>
+      <div style="display:flex;gap:8px">
+        <input class="fi" type="text" id="s-api" placeholder="https://script.google.com/macros/s/.../exec" style="font-size:12px;flex:1">
+        <button onclick="testApi()" style="padding:12px 14px;background:#15803D;color:white;border:none;border-radius:8px;font-weight:700;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap">Testar ✓</button>
+      </div>
+      <div id="api-tr" style="margin-top:7px;font-size:12px;font-weight:600;display:none"></div>
+      <p style="font-size:11px;color:#3D7A1E;margin-top:7px">Cole o URL após publicar o Apps Script. Ver separador "Guia Sheets".</p>
+    </div>
+    <div class="f2">
+      <div class="fg"><label class="fl">Número Portugal</label><input class="fi" type="text" id="s-pt" placeholder="+351 929 201 880"></div>
+      <div class="fg"><label class="fl">Número Moçambique</label><input class="fi" type="text" id="s-mz" placeholder="+258 87 342 9076"></div>
+    </div>
+    <div class="fg"><label class="fl">WhatsApp Portugal (sem +)</label><input class="fi" type="text" id="s-wa" placeholder="351929201880"></div>
+    <hr style="border:none;border-top:1px solid var(--bd);margin:16px 0">
+    <div class="f2">
+      <div class="fg"><label class="fl">Nova senha (vazio = manter)</label><input class="fi" type="password" id="s-np" placeholder="Nova senha"></div>
+      <div class="fg"><label class="fl">Confirmar senha</label><input class="fi" type="password" id="s-cp" placeholder="Repetir"></div>
+    </div>
+    <div class="mft"><button class="mcan" onclick="closeM('mod-set')">Cancelar</button><button class="mok" onclick="saveSett()">Guardar</button></div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+// CONFIGURAÇÃO — cole o seu URL aqui depois de
+// publicar o Apps Script, para que TODOS os
+// utilizadores possam rastrear encomendas.
+// ═══════════════════════════════════════════════
+const SHEETS_URL_DEFAULT = '';
+// Exemplo: const SHEETS_URL_DEFAULT = 'https://script.google.com/macros/s/AKfy.../exec';
+
+// ═══════════════════════════════════════════════
+// CONFIG (localStorage — só admin)
+// ═══════════════════════════════════════════════
+const CFG_KEY = 'fw_v6';
+function loadCfg(){
+  try{const r=localStorage.getItem(CFG_KEY);if(r)return JSON.parse(r);}catch(e){}
+  return{api:SHEETS_URL_DEFAULT,wa:'351929201880',pt:'+351 929 201 880',mz:'+258 87 342 9076',pass:'flyway2024'};
+}
+function saveCfg(c){localStorage.setItem(CFG_KEY,JSON.stringify(c));}
+let CFG=loadCfg();
+
+function getApi(){return CFG.api||SHEETS_URL_DEFAULT||'';}
+
+function applyConfig(){
+  ['d-pt','d-mz'].forEach(id=>{
+    const e=document.getElementById(id);
+    if(e)e.textContent=id==='d-pt'?(CFG.pt||'+351 929 201 880'):(CFG.mz||'+258 87 342 9076');
+  });
+}
+applyConfig();
+
+let cache=[];
+
+// ═══════════════════════════════════════════════
+// API — fetch com timeout e retry
+// ═══════════════════════════════════════════════
+async function apiFetch(params,timeout=20000){
+  const url=getApi();
+  if(!url)throw new Error('NO_URL');
+  const qs=Object.entries(params).map(([k,v])=>encodeURIComponent(k)+'='+encodeURIComponent(v)).join('&');
+  const ctrl=new AbortController();
+  const tid=setTimeout(()=>ctrl.abort(),timeout);
+  try{
+    const r=await fetch(url+'?'+qs,{method:'GET',redirect:'follow',signal:ctrl.signal});
+    clearTimeout(tid);
+    const txt=await r.text();
+    // Tentar extrair JSON mesmo se houver HTML à volta (bug Apps Script redirect)
+    const m=txt.match(/\{[\s\S]*\}/);
+    if(m)return JSON.parse(m[0]);
+    throw new Error('Resposta inválida do servidor.');
+  }catch(e){
+    clearTimeout(tid);
+    if(e.name==='AbortError')throw new Error('Tempo esgotado. Verifique a sua ligação à internet.');
+    throw e;
+  }
+}
+
+async function apiGetOrder(id){return apiFetch({action:'getOrder',id});}
+async function apiGetAll(){return apiFetch({action:'getAll'});}
+async function apiSave(order){return apiFetch({action:'save',data:JSON.stringify(order)});}
+async function apiDelete(id){return apiFetch({action:'delete',id});}
+
+// ═══════════════════════════════════════════════
+// LOADING
+// ═══════════════════════════════════════════════
+function showLo(m='A carregar...'){document.getElementById('lo-msg').textContent=m;document.getElementById('lo').classList.remove('hidden');}
+function hideLo(){document.getElementById('lo').classList.add('hidden');}
+
+// ═══════════════════════════════════════════════
+// CANVAS ANIMATIONS
+// ═══════════════════════════════════════════════
+(function hero(){
+  const c=document.getElementById('hcv');if(!c)return;
+  const ctx=c.getContext('2d');let W,H,pts=[];
+  const rsz=()=>{W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;};
+  window.addEventListener('resize',rsz);rsz();
+  for(let i=0;i<70;i++)pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35,r:Math.random()*2+.4,a:Math.random()*.35+.08});
+  const rt=[{x:.1,y:.7},{x:.25,y:.42},{x:.42,y:.56},{x:.56,y:.3},{x:.7,y:.5},{x:.84,y:.36},{x:.94,y:.54}];
+  let rp=0,t=0;
+  const fr=()=>{
+    ctx.clearRect(0,0,W,H);t+=.005;
+    for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){
+      const d=Math.hypot(pts[i].x-pts[j].x,pts[i].y-pts[j].y);
+      if(d<110){ctx.beginPath();ctx.strokeStyle=`rgba(240,120,0,${.06*(1-d/110)})`;ctx.lineWidth=.5;ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.stroke();}
+    }
+    pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(240,120,0,${p.a})`;ctx.fill();});
+    rp=(rp+.0018)%1;const tot=rt.length-1;const s=rp*tot;const si=Math.floor(s);const sf=s-si;
+    ctx.beginPath();ctx.strokeStyle='rgba(240,120,0,.12)';ctx.lineWidth=1.5;ctx.setLineDash([5,8]);ctx.moveTo(rt[0].x*W,rt[0].y*H);rt.forEach(p=>ctx.lineTo(p.x*W,p.y*H));ctx.stroke();ctx.setLineDash([]);
+    if(si<tot){const a=rt[si],b=rt[si+1];const tx=a.x*W+(b.x*W-a.x*W)*sf,ty=a.y*H+(b.y*H-a.y*H)*sf;ctx.save();ctx.translate(tx,ty);ctx.font='16px serif';ctx.fillText('✈️',-8,-8);ctx.restore();}
+    rt.forEach((p,i)=>{const pl=Math.sin(t*2+i)*.25+.75;ctx.beginPath();ctx.arc(p.x*W,p.y*H,5*pl,0,Math.PI*2);ctx.fillStyle=`rgba(240,120,0,${.55*pl})`;ctx.fill();});
+    requestAnimationFrame(fr);
+  };fr();
+})();
+
+(function reel(){
+  const c=document.getElementById('rcv');if(!c)return;
+  const ctx=c.getContext('2d');let W,H;
+  const rsz=()=>{W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;};
+  window.addEventListener('resize',rsz);rsz();
+  const cities=[{n:'Porto',x:.18,y:.32,sz:7},{n:'Maputo',x:.54,y:.72,sz:7},{n:'Beira',x:.54,y:.63,sz:4},{n:'Nampula',x:.57,y:.55,sz:4}];
+  const pkgs=[];for(let i=0;i<5;i++)pkgs.push({x:Math.random(),y:Math.random(),vx:.0008+Math.random()*.001,vy:-.0004-Math.random()*.0005,sz:3+Math.random()*3.5});
+  let rp=0,t=0;
+  const fr=()=>{
+    ctx.clearRect(0,0,W,H);t+=.007;
+    ctx.strokeStyle='rgba(240,120,0,.045)';ctx.lineWidth=.5;
+    for(let i=0;i<=18;i++){ctx.beginPath();ctx.moveTo(i/18*W,0);ctx.lineTo(i/18*W,H);ctx.stroke();ctx.beginPath();ctx.moveTo(0,i/18*H);ctx.lineTo(W,i/18*H);ctx.stroke();}
+    rp=(rp+.0025)%1;const px=cities[0].x*W,py=cities[0].y*H,mx=cities[1].x*W,my=cities[1].y*H;
+    const cx=(px+mx)/2,cy=Math.min(py,my)-H*.32;const tp=rp;
+    const bx=(1-tp)*(1-tp)*px+2*(1-tp)*tp*cx+tp*tp*mx;const by=(1-tp)*(1-tp)*py+2*(1-tp)*tp*cy+tp*tp*my;
+    ctx.beginPath();ctx.moveTo(px,py);ctx.quadraticCurveTo(cx,cy,mx,my);ctx.strokeStyle='rgba(240,120,0,.1)';ctx.lineWidth=1.5;ctx.setLineDash([4,8]);ctx.stroke();ctx.setLineDash([]);
+    ctx.save();const dx=2*(1-tp)*(cx-px)+2*tp*(mx-cx);const dy=2*(1-tp)*(cy-py)+2*tp*(my-cy);ctx.translate(bx,by);ctx.rotate(Math.atan2(dy,dx));ctx.font='17px serif';ctx.fillText('✈️',-8,-8);ctx.restore();
+    cities.forEach((city,i)=>{const pl=Math.sin(t+i*1.2)*.25+.75;ctx.beginPath();ctx.arc(city.x*W,city.y*H,city.sz*pl,0,Math.PI*2);ctx.fillStyle=`rgba(240,120,0,${.65*pl})`;ctx.fill();if(city.sz>=5){ctx.fillStyle='rgba(255,255,255,.65)';ctx.font='bold 10px Inter,sans-serif';ctx.fillText(city.n,city.x*W+10,city.y*H+4);}});
+    pkgs.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x>1.1)p.x=-0.1;if(p.y<-0.1)p.y=1.1;ctx.save();ctx.globalAlpha=.4;ctx.font=`${p.sz*3}px serif`;ctx.fillText('📦',p.x*W,p.y*H);ctx.restore();});
+    const sl=(t*55)%H;const g=ctx.createLinearGradient(0,sl-18,0,sl+18);g.addColorStop(0,'rgba(240,120,0,0)');g.addColorStop(.5,'rgba(240,120,0,.025)');g.addColorStop(1,'rgba(240,120,0,0)');ctx.fillStyle=g;ctx.fillRect(0,sl-18,W,36);
+    requestAnimationFrame(fr);
+  };fr();
+})();
+
+// ═══════════════════════════════════════════════
+// SCROLL & COUNTERS
+// ═══════════════════════════════════════════════
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');obs.unobserve(e.target);}});},{threshold:.1});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+
+function countUp(el,target){
+  let c=0;const step=target/55;
+  const ti=setInterval(()=>{
+    c=Math.min(c+step,target);
+    const v=Math.floor(c);
+    const suf=el.dataset.c?'+':'';
+    el.textContent=v+suf;
+    if(el.dataset.c==='99')el.textContent='99%';
+    if(c>=target)clearInterval(ti);
+  },20);
+}
+const cobs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){
+  e.target.querySelectorAll('[data-c]').forEach(el=>countUp(el,parseInt(el.dataset.c)));
+  e.target.querySelectorAll('[data-c2]').forEach(el=>{
+    let c=0;const t2=parseInt(el.dataset.c2);
+    const ti=setInterval(()=>{c=Math.min(c+t2/55,t2);el.textContent=Math.floor(c);if(c>=t2){el.textContent=t2;clearInterval(ti);}},20);
+  });
+  cobs.unobserve(e.target);
+}});},{threshold:.3});
+document.querySelectorAll('.hsts,.rstats').forEach(el=>cobs.observe(el));
+
+window.addEventListener('scroll',()=>{
+  const nav=document.getElementById('nav');
+  if(!document.getElementById('vm').classList.contains('hidden')){
+    const dark=window.scrollY>60;
+    nav.className=dark?'dark':'';
+  }
+});
+
+// ═══════════════════════════════════════════════
+// VIEWS
+// ═══════════════════════════════════════════════
+function showV(id){
+  ['vm','vt','val','vad'].forEach(v=>document.getElementById(v).classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+  document.getElementById('nav').style.display=id==='vm'?'':'none';
+  window.scrollTo(0,0);
+}
+function goHome(){showV('vm');}
+function showAdmin(){showV('val');}
+function scrollTrack(){
+  showV('vm');
+  setTimeout(()=>{document.querySelector('.tbox').scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>document.getElementById('t-inp').focus(),350);},80);
+}
+function toggleMob(){document.getElementById('mob').classList.toggle('open');}
+function closeMob(){document.getElementById('mob').classList.remove('open');}
+function openWA(){CFG=loadCfg();window.open(`https://wa.me/${CFG.wa||'351929201880'}?text=Olá%20FLY%20WAY%20Logistics!%20Gostaria%20de%20informações.`,'_blank');}
+
+// ═══════════════════════════════════════════════
+// RASTREIO PÚBLICO — funciona para qualquer pessoa
+// ═══════════════════════════════════════════════
+async function doTrack(){
+  const num=document.getElementById('t-inp').value.trim().toUpperCase();
+  const err=document.getElementById('t-err');
+  err.style.display='none';
+  if(!num){err.textContent='Por favor insira um número de rastreio.';err.style.display='block';return;}
+  if(!getApi()){
+    err.innerHTML='Sistema de rastreio em configuração.<br>Contacte-nos: <strong>+351 929 201 880</strong>';
+    err.style.display='block';return;
+  }
+  showLo('A pesquisar a encomenda...');
+  try{
+    const data=await apiGetOrder(num);
+    hideLo();
+    if(data&&data.order){buildTrack(data.order);showV('vt');}
+    else{err.textContent='Encomenda não encontrada. Verifique o número ou contacte-nos.';err.style.display='block';}
+  }catch(e){
+    hideLo();
+    if(e.message==='NO_URL')err.innerHTML='Sistema de rastreio em configuração.<br>Contacte-nos: <strong>+351 929 201 880</strong>';
+    else err.textContent='Erro de ligação. Tente novamente ou contacte-nos.';
+    err.style.display='block';
+  }
+}
+
+// ═══════════════════════════════════════════════
+// BUILD TRACKING VIEW
+// ═══════════════════════════════════════════════
+const STS=['Encomenda Registada','Recolhida','Em Trânsito','Na Alfândega','Em Distribuição','Entregue'];
+const EM={'Encomenda Registada':'📦','Recolhida':'✅','Em Trânsito':'🚛','Na Alfândega':'🛃','Em Distribuição':'🏍️','Entregue':'🎉','Tentativa Falhada':'⚠️'};
+function stIdx(s){const i=STS.indexOf(s);return i<0?0:i;}
+function pc(s){if(s==='Entregue')return'pd';if(['Em Trânsito','Na Alfândega','Em Distribuição','Recolhida'].includes(s))return'pt';if(s==='Tentativa Falhada')return'pf';return'pp';}
+function bc(s){if(s==='Entregue')return'bde';if(s==='Em Trânsito'||s==='Recolhida')return'btr';if(s==='Na Alfândega')return'bcu';if(s==='Em Distribuição')return'bdi';if(s==='Tentativa Falhada')return'bfa';return'bre';}
+
+function buildPS(cur,evts){
+  const em={};(evts||[]).forEach(e=>{if(!em[e.status])em[e.status]=e;});
+  const ci=stIdx(cur),fail=cur==='Tentativa Falhada';
+  return STS.map((s,i)=>{
+    let nc='np',tick='';
+    if(!fail){if(i<ci){nc='nd';tick='<div class="pstk">✓</div>';}else if(i===ci)nc='na';}
+    const ev=em[s];
+    const dt=ev?(ev.date+(ev.time?' '+ev.time:'')):'';
+    return `<div class="psw ${i===ci?'aw':''}">
+      <div class="psnode ${nc}" style="position:relative"><span class="psem">${EM[s]||'📦'}</span>${tick}</div>
+      ${i<STS.length-1?`<div class="psconn ${!fail&&i<ci?'done':''}"></div>`:''}
+      <div class="psnm">${s.replace('Encomenda ','')}</div>
+      <div class="psdt">${dt}</div>
+    </div>`;
+  }).join('');
+}
+
+function buildAnim(st,origin,dest){
+  if(st==='Entregue')return`<div class="delivered-scene"><div class="dico">🎉</div><div class="dtxt"><strong>Entregue!</strong><span>A encomenda chegou ao destino</span></div><div class="dico">📦</div></div>`;
+  if(st==='Tentativa Falhada')return`<div class="delivered-scene"><div style="font-size:50px">⚠️</div><div class="dtxt"><strong style="color:var(--rd)">Tentativa falhada</strong><span>Contacte-nos para reagendar</span></div></div>`;
+  const p=Math.min(Math.round((stIdx(st)/(STS.length-1))*78)+5,84);
+  return`<div style="font-size:26px;position:absolute;left:28px;bottom:38px;z-index:2">📦</div>
+  <div class="truck" style="left:${p}%">
+    <svg width="80" height="48" viewBox="0 0 80 48" fill="none">
+      <rect x="2" y="10" width="50" height="28" rx="4" fill="#F07800"/>
+      <rect x="52" y="16" width="22" height="22" rx="3" fill="#D96800"/>
+      <rect x="4" y="12" width="19" height="12" rx="2" fill="rgba(255,255,255,.3)"/>
+      <rect x="55" y="18" width="14" height="10" rx="2" fill="rgba(255,255,255,.2)"/>
+      <circle cx="15" cy="41" r="5" fill="#111"/><circle cx="15" cy="41" r="2.5" fill="#555"/>
+      <circle cx="60" cy="41" r="5" fill="#111"/><circle cx="60" cy="41" r="2.5" fill="#555"/>
+      <circle cx="5" cy="22" r="2.5" fill="#FFCC00"/>
+    </svg>
+  </div>
+  <div style="font-size:26px;position:absolute;right:28px;bottom:36px;z-index:2">🏠</div>
+  <div class="trd"><div class="trdbg"></div><div class="trdsh"></div></div>
+  <div class="trll">${origin}</div><div class="trlr">${dest}</div>`;
+}
+
+function buildTrack(order){
+  const evts=order.events||[];
+  const lat=evts[evts.length-1]||{};
+  const rev=[...evts].reverse();
+  const tl=rev.map((ev,i)=>{
+    const first=i===0,last=i===rev.length-1;
+    return`<div class="tlrow">
+      <div class="tlcol"><div class="tldot ${first?'tla':'tld2'}">${EM[ev.status]||'📦'}</div>${!last?`<div class="tlline ${first?'':'d'}"></div>`:''}</div>
+      <div class="tlinf">
+        <strong>${ev.status}</strong>
+        ${ev.location?`<div class="lloc">📍 ${ev.location}</div>`:''}
+        <div class="ldt">🕐 ${ev.date}${ev.time?' às '+ev.time:''}</div>
+        ${ev.notes?`<div class="lnote">${ev.notes}</div>`:''}
+      </div>
+    </div>`;
+  }).join('');
+  const reg=order.createdAt+(order.createdTime?' às '+order.createdTime:'');
+  document.getElementById('trcontent').innerHTML=`
+    <div class="trc">
+      <div class="trctop">
+        <div>
+          <div class="trcidl">Número de rastreio</div>
+          <div class="trcid">${order.id}</div>
+          <div class="trcdesc">${order.description||'Encomenda'} · ${order.origin} → ${order.destination}</div>
+        </div>
+        <div class="tpill ${pc(lat.status)}">${EM[lat.status]||'📦'} ${lat.status||'Pendente'}</div>
+      </div>
+      <div class="trcprog"><div class="trcprogl">Progresso da entrega</div><div class="psteps">${buildPS(lat.status,evts)}</div></div>
+      <div class="trcanim">${buildAnim(lat.status,order.origin,order.destination)}</div>
+      <div class="trcmeta">
+        <div class="trcmb"><strong>Cliente</strong><span>${order.customerName}</span></div>
+        <div class="trcmb"><strong>Origem</strong><span>${order.origin}</span></div>
+        <div class="trcmb"><strong>Destino</strong><span>${order.destination}</span></div>
+        <div class="trcmb"><strong>Registada em</strong><span>${reg}</span></div>
+        ${order.phone?`<div class="trcmb"><strong>Contacto</strong><span>${order.phone}</span></div>`:''}
+      </div>
+    </div>
+    <div class="tlcard"><div class="tlhd"><span style="font-size:16px">📋</span><h3>Histórico de Movimentos</h3></div><div class="tlbody">${tl}</div></div>`;
+}
+
+// ═══════════════════════════════════════════════
+// ADMIN
+// ═══════════════════════════════════════════════
+function updBadge(){
+  const el=document.getElementById('apibadge');if(!el)return;
+  if(getApi()){el.className='apibadge aok';el.textContent='● Sheets: ligado';}
+  else{el.className='apibadge anone';el.textContent='● Sheets: não configurado';}
+}
+function doLogin(){
+  CFG=loadCfg();
+  if(document.getElementById('adm-pw').value===CFG.pass){
+    document.getElementById('adm-pw').value='';
+    document.getElementById('lg-err').style.display='none';
+    showV('vad');updBadge();renderOrds();
+  }else document.getElementById('lg-err').style.display='block';
+}
+function switchTab(t){
+  document.querySelectorAll('.at').forEach((el,i)=>el.classList.toggle('active',(['o','s','g'][i])===t));
+  ['tab-o','tab-s','tab-g'].forEach((id,i)=>document.getElementById(id).classList.toggle('hidden',['o','s','g'][i]!==t));
+  if(t==='s')renderStats();
+}
+async function renderOrds(){
+  const el=document.getElementById('ob');
+  if(!getApi()){el.innerHTML=`<div class="emp"><span class="ei">📊</span><p style="font-weight:700">Sheets não configurado</p><small style="color:var(--mt);display:block;margin-top:8px">Vá a ⚙ Definições, adicione o URL do Apps Script e clique Testar.<br>Consulte o separador "Guia Sheets" para instruções passo a passo.</small></div>`;return;}
+  el.innerHTML=`<div class="emp"><div class="spin" style="margin:0 auto 14px"></div><p style="font-weight:500;font-size:14px;color:var(--mt)">A carregar do Google Sheets...</p></div>`;
+  try{
+    const d=await apiGetAll();
+    cache=d.orders||[];
+    document.getElementById('oc').textContent=`(${cache.length})`;
+    renderTable(cache);
+  }catch(e){el.innerHTML=`<div class="emp"><span class="ei">⚠️</span><p>Erro de ligação ao Sheets</p><small style="color:var(--rd);display:block;margin-top:6px">${e.message}</small><small style="color:var(--mt);display:block;margin-top:4px">Verifique o URL nas Definições e se o Apps Script está publicado com acesso "Qualquer pessoa".</small></div>`;}
+}
+function filterOrds(){
+  const q=(document.getElementById('srch')?.value||'').toLowerCase();
+  renderTable(q?cache.filter(o=>o.id.toLowerCase().includes(q)||o.customerName.toLowerCase().includes(q)||(o.destination||'').toLowerCase().includes(q)):cache);
+}
+function renderTable(ords){
+  const el=document.getElementById('ob');
+  if(!ords.length){el.innerHTML=`<div class="emp"><span class="ei">📦</span><p>Nenhuma encomenda</p></div>`;return;}
+  const sorted=[...ords].sort((a,b)=>b.createdAt.localeCompare(a.createdAt));
+  el.innerHTML=`<table><thead><tr><th>Código</th><th>Cliente</th><th>Rota</th><th>Status</th><th>Data · Hora</th><th>Acções</th></tr></thead><tbody>${
+    sorted.map(o=>{
+      const lat=(o.events||[]).slice(-1)[0]||{};
+      const dt=o.createdAt+(o.createdTime?' '+o.createdTime:'');
+      return`<tr>
+        <td><strong style="font-size:15px;font-weight:800;letter-spacing:-.5px">${o.id}</strong></td>
+        <td>${o.customerName}<br><small style="color:var(--mt)">${o.phone||''}</small></td>
+        <td style="white-space:nowrap;font-size:12px">${o.origin} → ${o.destination}</td>
+        <td><span class="bdg ${bc(lat.status)}">${EM[lat.status]||''} ${lat.status||'—'}</span></td>
+        <td style="font-size:12px;color:var(--mt)">${dt}</td>
+        <td><div class="acts">
+          <button class="ab aor" style="font-size:11px;padding:5px 9px" onclick="openUpd('${o.id}')">Atualizar</button>
+          <button class="ab abl" style="font-size:11px;padding:5px 9px" onclick="openEdit('${o.id}')">Editar</button>
+          <button class="ab ard" style="font-size:11px;padding:5px 9px" onclick="delOrd('${o.id}')">Apagar</button>
+        </div></td>
+      </tr>`;
+    }).join('')
+  }</tbody></table>`;
+}
+function renderStats(){
+  const tot=cache.length;
+  const del=cache.filter(o=>(o.events||[]).slice(-1)[0]?.status==='Entregue').length;
+  const tr=cache.filter(o=>['Em Trânsito','Em Distribuição','Na Alfândega','Recolhida'].includes((o.events||[]).slice(-1)[0]?.status)).length;
+  document.getElementById('stb').innerHTML=`
+    <div class="stcard"><div class="stbig cor">${tot}</div><div class="stlbl">Total</div></div>
+    <div class="stcard"><div class="stbig cgr">${del}</div><div class="stlbl">Entregues</div></div>
+    <div class="stcard"><div class="stbig cbl">${tr}</div><div class="stlbl">Em Trânsito</div></div>
+    <div class="stcard"><div class="stbig cam">${tot-del-tr}</div><div class="stlbl">Pendentes</div></div>`;
+}
+// CRUD
+function openNewOrd(){
+  document.getElementById('mod-ttl').textContent='Nova Encomenda';
+  document.getElementById('eid').value='';
+  ['fi-id','fi-nm','fi-ph','fi-ds','fi-or','fi-de','fi-no'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('fi-id').disabled=false;
+  document.getElementById('fi-st').value='Encomenda Registada';
+  hA();openM('mod-ord');
+}
+function openEdit(id){
+  const o=cache.find(x=>x.id===id);if(!o)return;
+  document.getElementById('mod-ttl').textContent='Editar Encomenda';
+  document.getElementById('eid').value=id;
+  document.getElementById('fi-id').value=o.id;document.getElementById('fi-id').disabled=true;
+  document.getElementById('fi-nm').value=o.customerName;document.getElementById('fi-ph').value=o.phone||'';
+  document.getElementById('fi-ds').value=o.description||'';document.getElementById('fi-or').value=o.origin;
+  document.getElementById('fi-de').value=o.destination;document.getElementById('fi-no').value='';
+  const lat=(o.events||[]).slice(-1)[0];if(lat)document.getElementById('fi-st').value=lat.status;
+  hA();openM('mod-ord');
+}
+async function saveOrd(){
+  const eid=document.getElementById('eid').value;
+  const tid=document.getElementById('fi-id').value.trim().toUpperCase();
+  const nm=document.getElementById('fi-nm').value.trim();
+  const ph=document.getElementById('fi-ph').value.trim();
+  const ds=document.getElementById('fi-ds').value.trim();
+  const or=document.getElementById('fi-or').value.trim();
+  const de=document.getElementById('fi-de').value.trim();
+  const st=document.getElementById('fi-st').value;
+  const no=document.getElementById('fi-no').value.trim();
+  if(!tid||!nm||!or||!de){shA('ord-err','Preencha os campos obrigatórios.');return;}
+  if(!eid&&cache.find(x=>x.id===tid)){shA('ord-err','Este número já existe.');return;}
+  const now=new Date();const d=now.toLocaleDateString('pt-PT');const tm=now.toLocaleTimeString('pt-PT',{hour:'2-digit',minute:'2-digit'});
+  const order=eid
+    ?{...(cache.find(x=>x.id===eid)||{}),customerName:nm,phone:ph,description:ds,origin:or,destination:de}
+    :{id:tid,customerName:nm,phone:ph,description:ds,origin:or,destination:de,createdAt:d,createdTime:tm,events:[{status:st,location:or,date:d,time:tm,notes:no}]};
+  showLo('A guardar no Sheets...');
+  try{await apiSave(order);hideLo();shA('ord-ok','Guardado! ✅');await renderOrds();setTimeout(()=>closeM('mod-ord'),1300);}
+  catch(e){hideLo();shA('ord-err','Erro: '+e.message);}
+}
+async function delOrd(id){
+  if(!confirm(`Apagar ${id}? Acção irreversível.`))return;
+  showLo('A apagar...');
+  try{await apiDelete(id);hideLo();await renderOrds();}
+  catch(e){hideLo();alert('Erro: '+e.message);}
+}
+// UPDATE + WA
+function openUpd(id){
+  const o=cache.find(x=>x.id===id);if(!o)return;
+  document.getElementById('uid').value=id;
+  document.getElementById('u-ref').value=`${o.id} — ${o.customerName}`;
+  const lat=(o.events||[]).slice(-1)[0];
+  if(lat){document.getElementById('u-st').value=lat.status;document.getElementById('u-loc').value=lat.location||'';}
+  document.getElementById('u-no').value='';
+  const evts=[...(o.events||[])].reverse();
+  document.getElementById('u-hist').innerHTML=evts.length?evts.map(e=>`<div class="hlr"><span class="hls">${EM[e.status]||''} ${e.status}</span><span class="hld">${e.date}${e.time?' '+e.time:''}</span></div>`).join(''):'<div class="hlr"><span class="hls" style="color:var(--mt)">Sem histórico</span></div>';
+  document.getElementById('upd-form').classList.remove('hidden');
+  document.getElementById('upd-wa').classList.add('hidden');
+  document.getElementById('updttl').textContent='Atualizar Status';
+  openM('mod-upd');
+}
+async function saveUpd(){
+  const id=document.getElementById('uid').value;
+  const st=document.getElementById('u-st').value;
+  const loc=document.getElementById('u-loc').value.trim();
+  const no=document.getElementById('u-no').value.trim();
+  if(!id||!st)return;
+  const o=cache.find(x=>x.id===id);if(!o)return;
+  const now=new Date();const d=now.toLocaleDateString('pt-PT');const tm=now.toLocaleTimeString('pt-PT',{hour:'2-digit',minute:'2-digit'});
+  const updated={...o,events:[...(o.events||[]),{status:st,location:loc,date:d,time:tm,notes:no}]};
+  showLo('A guardar...');
+  try{
+    await apiSave(updated);hideLo();
+    const i=cache.findIndex(x=>x.id===id);if(i>=0)cache[i]=updated;
+    renderTable(cache);
+    const msgs={
+      'Encomenda Registada':'A sua encomenda foi registada e aguarda recolha.',
+      'Recolhida':'A sua encomenda foi recolhida com sucesso.',
+      'Em Trânsito':'A sua encomenda está em trânsito a caminho do destino.',
+      'Na Alfândega':'A sua encomenda está a ser processada na alfândega.',
+      'Em Distribuição':'A sua encomenda saiu para entrega hoje! Esteja disponível para a receber.',
+      'Entregue':'🎉 A sua encomenda foi entregue com sucesso! Obrigado por escolher a FLY WAY Logistics.',
+      'Tentativa Falhada':'Tentámos entregar mas não foi possível. Por favor contacte-nos para reagendar.'
+    };
+    const msg=`Olá ${o.customerName}! 👋\n\n*FLY WAY Logistics* — Actualização\n\n📦 Código: *${o.id}*\n${EM[st]||'📦'} Status: *${st}*${loc?'\n📍 Localização: '+loc:''}${no?'\n💬 '+no:''}\n\n${msgs[st]||''}\n\n🕐 ${d} às ${tm}\n\n📞 Portugal: ${CFG.pt||'+351 929 201 880'}`;
+    document.getElementById('upd-form').classList.add('hidden');
+    document.getElementById('upd-wa').classList.remove('hidden');
+    document.getElementById('updttl').textContent='Notificar Cliente';
+    document.getElementById('wa-prev').textContent=msg;
+    document.getElementById('wa-edit').value=msg;
+    document.getElementById('wa-cn').textContent=o.customerName;
+    const hasP=!!(o.phone&&o.phone.trim());
+    const ph=(o.phone||'').replace(/[\s+\-()\[\]]/g,'');
+    document.getElementById('wa-cp').innerHTML=hasP?`Telefone: <strong>${o.phone}</strong>`:'<span style="color:var(--rd);font-weight:600">⚠️ Sem telefone — edite a encomenda</span>';
+    const btn=document.getElementById('wa-sbtn');btn.disabled=!hasP;btn.style.opacity=hasP?'1':'.4';btn.setAttribute('data-ph',ph);
+  }catch(e){hideLo();alert('Erro: '+e.message);}
+}
+function sendWA(){const ph=document.getElementById('wa-sbtn').getAttribute('data-ph');const msg=document.getElementById('wa-edit').value;if(!ph)return;window.open(`https://wa.me/${ph}?text=${encodeURIComponent(msg)}`,'_blank');}
+function closeUpdM(){closeM('mod-upd');document.getElementById('upd-form').classList.remove('hidden');document.getElementById('upd-wa').classList.add('hidden');}
+// SETTINGS
+function openSett(){
+  CFG=loadCfg();
+  document.getElementById('s-api').value=CFG.api||'';
+  document.getElementById('s-pt').value=CFG.pt||'';
+  document.getElementById('s-mz').value=CFG.mz||'';
+  document.getElementById('s-wa').value=CFG.wa||'';
+  document.getElementById('s-np').value='';document.getElementById('s-cp').value='';
+  ['set-ok','set-err','api-tr'].forEach(id=>{document.getElementById(id).style.display='none';});
+  openM('mod-set');
+}
+async function testApi(){
+  const url=document.getElementById('s-api').value.trim();
+  const res=document.getElementById('api-tr');
+  res.style.display='block';res.textContent='A testar...';res.style.color='var(--mt)';
+  if(!url){res.textContent='⚠️ Cole o URL primeiro.';res.style.color='var(--rd)';return;}
+  try{
+    const r=await fetch(url+'?action=ping',{redirect:'follow'});
+    const txt=await r.text();const m=txt.match(/\{[\s\S]*\}/);
+    const data=m?JSON.parse(m[0]):{};
+    if(data.success){res.textContent='✅ Ligação OK! Google Sheets online e pronto.';res.style.color='#15803D';}
+    else{res.textContent='⚠️ Resposta inesperada: '+JSON.stringify(data);res.style.color='var(--rd)';}
+  }catch(e){res.textContent='❌ '+e.message+'. Verifique o URL e acesso "Qualquer pessoa".';res.style.color='var(--rd)';}
+}
+function saveSett(){
+  CFG=loadCfg();
+  const np=document.getElementById('s-np').value,cp=document.getElementById('s-cp').value;
+  if(np&&np!==cp){alert('As senhas não coincidem.');return;}
+  CFG.api=document.getElementById('s-api').value.trim();
+  CFG.pt=document.getElementById('s-pt').value.trim();
+  CFG.mz=document.getElementById('s-mz').value.trim();
+  CFG.wa=document.getElementById('s-wa').value.trim();
+  if(np)CFG.pass=np;
+  saveCfg(CFG);applyConfig();updBadge();
+  shA('set-ok','Guardado!');setTimeout(()=>closeM('mod-set'),1100);
+}
+function openM(id){document.getElementById(id).classList.remove('hidden');}
+function closeM(id){document.getElementById(id).classList.add('hidden');}
+function hA(){['ord-ok','ord-err'].forEach(id=>{const e=document.getElementById(id);if(e)e.style.display='none';});}
+function shA(id,msg){const e=document.getElementById(id);if(e){e.textContent=msg;e.style.display='block';}}
+document.querySelectorAll('.ov').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.add('hidden');}));
+</script>
+
+<!--
+╔══════════════════════════════════════════════════════════╗
+║          APPS SCRIPT CODE — COPIE PARA O EDITOR          ║
+║  Extensões → Apps Script → Apagar tudo → Colar → Guardar ║
+╚══════════════════════════════════════════════════════════╝
+
+const SHEET_NAME = 'Encomendas';
+
+function doGet(e) {
+  try {
+    const p = e && e.parameter ? e.parameter : {};
+    const action = p.action || '';
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    let sheet = ss.getSheetByName(SHEET_NAME);
+    if (!sheet) { sheet = ss.insertSheet(SHEET_NAME); initSheet(sheet); }
+    else if (sheet.getLastRow() === 0) { initSheet(sheet); }
+    if (action === 'ping')     return ok({ status: 'online' });
+    if (action === 'getOrder') return getOrder(sheet, p.id);
+    if (action === 'getAll')   return getAllOrders(sheet);
+    if (action === 'save')     return saveOrder(sheet, JSON.parse(decodeURIComponent(p.data || '{}')));
+    if (action === 'delete')   return deleteOrder(sheet, p.id);
+    return ok({ message: 'FLY WAY Logistics API — Online' });
+  } catch (err) {
+    return fail('Erro: ' + err.toString());
+  }
+}
+
+function initSheet(sheet) {
+  const h = ['ID Rastreio','Nome Cliente','Telefone','Descrição','Origem','Destino','Data Registo','Hora Registo','Eventos JSON'];
+  sheet.appendRow(h);
+  const r = sheet.getRange(1, 1, 1, h.length);
+  r.setFontWeight('bold');
+  r.setBackground('#F07800');
+  r.setFontColor('#FFFFFF');
+  r.setHorizontalAlignment('center');
+  sheet.setFrozenRows(1);
+  sheet.setColumnWidth(1, 140); sheet.setColumnWidth(2, 160); sheet.setColumnWidth(3, 150);
+  sheet.setColumnWidth(4, 160); sheet.setColumnWidth(5, 120); sheet.setColumnWidth(6, 120);
+  sheet.setColumnWidth(7, 120); sheet.setColumnWidth(8, 100); sheet.setColumnWidth(9, 500);
+}
+
+function getOrder(sheet, id) {
+  if (!id) return fail('ID em falta');
+  const rows = sheet.getDataRange().getValues().slice(1);
+  for (const row of rows) {
+    if (String(row[0]).toUpperCase().trim() === id.toUpperCase().trim()) {
+      return ok({ order: rowToObj(row) });
+    }
+  }
+  return ok({ order: null });
+}
+
+function getAllOrders(sheet) {
+  const rows = sheet.getDataRange().getValues().slice(1);
+  return ok({ orders: rows.filter(r => r[0]).map(rowToObj) });
+}
+
+function saveOrder(sheet, order) {
+  if (!order || !order.id) return fail('Dados inválidos');
+  const row = [order.id, order.customerName||'', order.phone||'', order.description||'',
+    order.origin||'', order.destination||'', order.createdAt||'', order.createdTime||'',
+    JSON.stringify(order.events || [])];
+  const all = sheet.getDataRange().getValues();
+  for (let i = 1; i < all.length; i++) {
+    if (String(all[i][0]).toUpperCase().trim() === String(order.id).toUpperCase().trim()) {
+      sheet.getRange(i + 1, 1, 1, 9).setValues([row]);
+      return ok({ saved: true, action: 'updated' });
+    }
+  }
+  sheet.appendRow(row);
+  const last = sheet.getLastRow();
+  if (last % 2 === 0) sheet.getRange(last, 1, 1, 9).setBackground('#FFF8F0');
+  return ok({ saved: true, action: 'created' });
+}
+
+function deleteOrder(sheet, id) {
+  if (!id) return fail('ID em falta');
+  const all = sheet.getDataRange().getValues();
+  for (let i = 1; i < all.length; i++) {
+    if (String(all[i][0]).toUpperCase().trim() === id.toUpperCase().trim()) {
+      sheet.deleteRow(i + 1);
+      return ok({ deleted: true });
+    }
+  }
+  return ok({ deleted: false });
+}
+
+function rowToObj(row) {
+  let events = [];
+  try { events = JSON.parse(String(row[8] || '[]')); } catch(e) { events = []; }
+  return { id: String(row[0]||''), customerName: String(row[1]||''), phone: String(row[2]||''),
+    description: String(row[3]||''), origin: String(row[4]||''), destination: String(row[5]||''),
+    createdAt: String(row[6]||''), createdTime: String(row[7]||''), events: events };
+}
+
+function ok(data) {
+  return ContentService.createTextOutput(JSON.stringify(Object.assign({ success: true }, data)))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function fail(msg) {
+  return ContentService.createTextOutput(JSON.stringify({ success: false, message: msg }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function testar() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = ss.getSheetByName(SHEET_NAME);
+  if (!sheet) { sheet = ss.insertSheet(SHEET_NAME); initSheet(sheet); }
+  const order = { id: 'FW-001', customerName: 'Maria Silva', phone: '+258840000000',
+    description: 'Roupas e calçado', origin: 'Porto', destination: 'Maputo',
+    createdAt: new Date().toLocaleDateString('pt-PT'),
+    createdTime: new Date().toLocaleTimeString('pt-PT',{hour:'2-digit',minute:'2-digit'}),
+    events: [{ status: 'Encomenda Registada', location: 'Porto',
+      date: new Date().toLocaleDateString('pt-PT'),
+      time: new Date().toLocaleTimeString('pt-PT',{hour:'2-digit',minute:'2-digit'}),
+      notes: 'Encomenda recebida na sede Porto' }] };
+  saveOrder(sheet, order);
+  Logger.log('✅ Encomenda FW-001 criada! Verifique o Sheets.');
+}
+
+-->
+</body>
+</html>
